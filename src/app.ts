@@ -64,9 +64,9 @@ class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'REST API',
+          title: 'Udrems Backend',
           version: '1.0.0',
-          description: 'Example docs',
+          description: 'Udrems api backend',
         },
       },
       apis: ['swagger.yaml'],
