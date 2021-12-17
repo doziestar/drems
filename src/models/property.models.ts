@@ -1,6 +1,7 @@
 // models for property
 
-import { Model, Schema } from 'mongoose';
+import { Property } from '@/interfaces/property.interface';
+import { Document, model, Schema } from 'mongoose';
 
 const propertySchema: Schema = new Schema({
   name: {
@@ -41,15 +42,6 @@ const propertySchema: Schema = new Schema({
   ],
 });
 
-// const Property = {
-//   schema: propertySchema,
-//   collection: 'properties',
-// };
-
-// const PropertyModel = {
-//   Property,
-// };
-
-const PropertyModel = new Model('Property', propertySchema);
+const PropertyModel = model<Property & Document>('Property', propertySchema);
 
 export { PropertyModel };

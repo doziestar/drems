@@ -1,18 +1,18 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import { Routes } from '@interfaces/routes.interface';
+import errorMiddleware from '@middlewares/error.middleware';
+import { logger, stream } from '@utils/logger';
 import compression from 'compression';
+import config from 'config';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import config from 'config';
 import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { Routes } from '@interfaces/routes.interface';
-import errorMiddleware from '@middlewares/error.middleware';
-import { logger, stream } from '@utils/logger';
 
 class App {
   public app: express.Application;
@@ -28,6 +28,7 @@ class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
+    // this.initializeDatabase();
   }
 
   public listen() {
@@ -75,6 +76,13 @@ class App {
     const specs = swaggerJSDoc(options);
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
+
+  // private initializeDatabase() {
+  //   mongoose
+  //     .connect('mongodb://udrems')
+  //     .then(() => logger.info('connected to database'))
+  //     .catch(e => logger.error(e));
+  // }
 
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);

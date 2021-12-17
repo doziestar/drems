@@ -1,6 +1,7 @@
 // tenant model
 
-import { Model, Schema } from 'mongoose';
+import { Tenant } from '@interfaces/tenant.interface';
+import { Document, model, Schema } from 'mongoose';
 
 const TenantSchema: Schema = new Schema({
   name: {
@@ -40,6 +41,6 @@ const TenantSchema: Schema = new Schema({
   },
 });
 
-const Tenant = new Model('Tenant', TenantSchema);
+const TenantModel = model<Tenant & Document>('Tenant', TenantSchema);
 
-export { Tenant };
+export { TenantModel };

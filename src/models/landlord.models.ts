@@ -1,6 +1,7 @@
 // landlord model
 
-import { Model, Schema } from 'mongoose';
+import { Landlord } from '@/interfaces/landlord.interface';
+import { model, Schema } from 'mongoose';
 
 const landlordSchema: Schema = new Schema({
   name: {
@@ -29,6 +30,6 @@ const landlordSchema: Schema = new Schema({
   ],
 });
 
-const Landlord = new Model('Landlord', landlordSchema);
+const Landlord = model<Landlord & Document>('Landlord', landlordSchema);
 
 export { Landlord };

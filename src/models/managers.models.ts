@@ -1,4 +1,5 @@
-import { Model, Schema } from 'mongoose';
+import { PropertyManager } from '@/interfaces/managers.interface';
+import { model, Schema } from 'mongoose';
 
 // models for property manager
 
@@ -26,6 +27,6 @@ const propertyManagerSchema: Schema = new Schema({
   ],
 });
 
-const PropertyManager = new Model('PropertyManager', propertyManagerSchema);
+const PropertyManager = model<PropertyManager & Document>('PropertyManager', propertyManagerSchema);
 
 export { PropertyManager };
