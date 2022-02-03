@@ -13,6 +13,7 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
+import { createConnection } from 'typeorm';
 
 class App {
   public app: express.Application;
@@ -28,7 +29,7 @@ class App {
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
-    // this.initializeDatabase();
+    this.initializeDatabase();
   }
 
   public listen() {
@@ -70,19 +71,22 @@ class App {
           description: 'Udrems api backend',
         },
       },
-      apis: ['swagger.yaml'],
+      apis: ['swagger.yaml', 'src/controllers/**/*.ts', 'src/repository/**/*.ts'],
     };
 
     const specs = swaggerJSDoc(options);
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
-  // private initializeDatabase() {
-  //   mongoose
-  //     .connect('mongodb://udrems')
-  //     .then(() => logger.info('connected to database'))
-  //     .catch(e => logger.error(e));
-  // }
+  private initializeDatabase() {
+    createConnection()
+      .then(() => {
+        logger.info('Connected to database');
+      })
+      .catch(error => {
+        logger.error('Database connection error: ', error);
+      });
+  }
 
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);

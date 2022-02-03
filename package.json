@@ -12,7 +12,11 @@
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "deploy:prod": "npm run build && pm2 start ecosystem.config.js --only prod",
-    "deploy:dev": "pm2 start ecosystem.config.js --only dev"
+    "deploy:dev": "pm2 start ecosystem.config.js --only dev",
+    "typeorm:migration": "typeorm migration:run",
+    "typeorm:migration:undo": "typeorm migration:undo",
+    "typeorm:migration:redo": "typeorm migration:redo",
+    "typeorm:migration:generate": "typeorm migration:generate"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -32,11 +36,14 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
+    "pg": "^8.7.1",
     "pm2": "^5.1.0",
     "swagger-jsdoc": "^6.0.0",
     "swagger-ui-express": "^4.1.6",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.0.0",
+    "typeorm": "^0.2.41",
+    "typeorm-seeding": "^1.6.1",
     "typescript": "^4.3.5",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.5"
