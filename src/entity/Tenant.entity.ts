@@ -3,27 +3,24 @@
 tenant can be a landlord, tenant, or manager
 tenant can be managed by a manager (manager can manage multiple tenants) or by a landlord (landlord can manage only one tenant)
  */
-import { Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, JoinColumn, JoinTable, ManyToMany, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
-import { Bill, Invoice, Payment, Receipt } from './Bill.entity';
-import { Contact } from './Contact.entity';
-import { Document } from './Document.entity';
-import { Event } from './Event.entity';
-import { Lease } from './Lease.entity';
+import { Bill, Document, Invoice, Lease, Payment, Receipt } from './Bill.entity';
+import { LandLord } from './Landlord.entity';
 import { Manager } from './Manager.entity';
-import { Message, Note, Notification, Task } from './Message.entity';
+import { Contact, Event, Message, Note, Notification, Task } from './Message.entity';
 import { Property } from './Property.entity';
-import { User } from './User';
 
 @Entity()
 export class Tenant extends BaseEntity {
-  @ManyToOne(type => User, user => user.tenants, { cascade: true })
-  @JoinColumn({
-    name: 'user_id',
-  })
-  user: User;
+  // @ManyToOne(type => User, user => user.tenants, { cascade: true })
+  // @JoinColumn({
+  //   name: 'user_id',
+  // })
+  // user: User;
 
   @ManyToMany(type => Property, property => property.tenants, { cascade: true })
+  @JoinTable({ name: 'tenant_property', joinColumn: { name: 'tenant_id' }, inverseJoinColumn: { name: 'property_id' } })
   properties: Property[];
 
   @OneToMany(type => Lease, lease => lease.tenant, { cascade: true })
@@ -51,17 +48,26 @@ export class Tenant extends BaseEntity {
   messages: Message[];
 
   @OneToMany(type => Notification, notification => notification.tenant, { cascade: true })
+  @JoinColumn({ name: 'tenant_id' })
   notifications: Notification[];
 
   @OneToMany(type => Task, task => task.tenant, { cascade: true })
+  @JoinColumn({ name: 'tenant_id' })
   tasks: Task[];
 
   @OneToMany(type => Event, event => event.tenant, { cascade: true })
+  @JoinColumn({ name: 'tenant_id' })
   events: Event[];
 
   @OneToMany(type => Contact, contact => contact.tenant, { cascade: true })
+  @JoinColumn({ name: 'tenant_id' })
   contacts: Contact[];
 
-  @ManyToOne(type => Manager, manager => manager.tenants, { cascade: true })
-  manager: Manager;
+  @ManyToMany(type => Manager, manager => manager.tenants, { cascade: true })
+  @JoinTable({ name: 'tenant_manager', joinColumn: { name: 'tenant_id' }, inverseJoinColumn: { name: 'manager_id' } })
+  manager: Manager[];
+
+  @ManyToMany(type => LandLord, landlord => landlord.tenants, { cascade: true })
+  @JoinTable({ name: 'tenant_landlord', joinColumn: { name: 'tenant_id' }, inverseJoinColumn: { name: 'landlord_id' } })
+  landlords: LandLord[];
 }
