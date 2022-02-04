@@ -27,6 +27,7 @@
       "@exceptions/*": ["exceptions/*"],
       "@interfaces/*": ["interfaces/*"],
       "@middlewares/*": ["middlewares/*"],
+      "@entity/*": ["entity/*"],
       "@models/*": ["models/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
