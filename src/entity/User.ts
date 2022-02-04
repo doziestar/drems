@@ -1,35 +1,55 @@
-import { UserProfile } from '@entity/User';
-import { IUserProfile } from '@interfaces/users.interface';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { Column, Entity, OneToOne } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { IsEmail, IsPhoneNumber, IsString } from 'class-validator';
+import * as jwt from 'jsonwebtoken';
+import { Column, Entity, OneToMany, OneToOne } from 'typeorm';
+import { UserProfile } from '../entity/profile.entity';
 import { BaseEntity } from './base.entity';
+import { Transaction } from './Transactions.entity';
+
+// enum for account type (landlord, tenant, manager)
+export enum AccountType {
+  Landlord = 'landlord',
+  Tenant = 'tenant',
+  Manager = 'manager',
+}
 
 @Entity()
 export class User extends BaseEntity {
   @Column()
+  @IsString()
   name: string;
 
   @Column()
+  @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @IsString()
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true })
+  @IsString()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   avatar: string;
 
-  @Column()
+  @Column({ type: 'enum', enum: AccountType, default: AccountType.Tenant })
+  type: AccountType;
+
+  @Column({ nullable: true })
+  @IsPhoneNumber()
   phoneNumber: string;
 
-  @Column()
-  @OneToOne(type => UserProfile)
-  profile: IUserProfile;
+  @OneToOne(type => UserProfile, userProfile => userProfile.user, { cascade: true })
+  profile: UserProfile;
+
+  // link user to transaction
+  @OneToMany(type => Transaction, transaction => transaction.user, { cascade: true })
+  transactions: Transaction[];
 
   @Column()
+  @IsString()
   password: string;
 
   // hash password before saving using bcrypt

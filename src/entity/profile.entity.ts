@@ -1,6 +1,6 @@
-import { User } from '@entity/User';
-import { IUser } from '@interfaces/users.interface';
-import { Column, Entity, OneToOne } from 'typeorm';
+import { IsPhoneNumber } from 'class-validator';
+import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { User } from '../entity/User';
 import { BaseEntity } from './base.entity';
 
 @Entity()
@@ -8,9 +8,11 @@ export class UserProfile extends BaseEntity {
   @Column()
   bio: string;
 
-  @Column()
-  @OneToOne(type => User)
-  user: IUser;
+  @OneToOne(type => User, user => user.profile, { cascade: true })
+  @JoinColumn({
+    name: 'user_id',
+  })
+  user: User;
 
   @Column()
   address: string;
@@ -19,11 +21,6 @@ export class UserProfile extends BaseEntity {
   avatar: string;
 
   @Column()
+  @IsPhoneNumber()
   phoneNumber: string;
-
-  @Column()
-  createdAt: Date;
-
-  @Column()
-  updatedAt: Date;
 }
