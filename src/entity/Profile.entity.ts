@@ -7,10 +7,12 @@
  * @param {type} type
  */
 
+import { Transaction } from '@entity/Account.entity';
 import { BaseEntity } from '@entity/Base.entity';
+import { Address } from '@entity/Shared.entity';
 import { User } from '@entity/User.entity';
-import { IsString } from 'class-validator';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { IsDate, IsString } from 'class-validator';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 export enum AccountType {
   Landlord = 'landlord',
@@ -20,22 +22,26 @@ export enum AccountType {
 
 @Entity()
 export class Profile extends BaseEntity {
-  @Column({ unique: true })
-  @IsString()
-  email: string;
-
   @Column()
   @IsString()
-  phoneNumber: string;
+  bio: string;
+
+  @OneToMany(type => Transaction, transaction => transaction.profile)
+  @JoinColumn({ name: 'transaction' })
+  transactions: Transaction[];
+
+  @OneToMany(type => Address, address => address.profile)
+  @JoinColumn({ name: 'address' })
+  address: Address[];
 
   @Column()
-  @IsString()
-  password: string;
+  @IsDate()
+  dateOfBirth: Date;
 
   @Column({ type: 'enum', enum: AccountType, default: AccountType.Tenant })
   accountType: AccountType;
 
   @OneToOne(type => User, user => user.profile)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user' })
   user: User;
 }

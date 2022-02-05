@@ -4,7 +4,7 @@
   "port": 5433,
   "username": "dozie",
   "password": "918273645dozie",
-  "database": "udremsts",
+  "database": "udremscore",
   "synchronize": true,
   "logging": true,
   "entities": ["src/entity/**/*.ts"],
