@@ -25,7 +25,7 @@ export class Address extends BaseEntity {
   @IsString()
   country: string;
 
-  // @ManyToOne(type => Profile, profile => profile.address)
-  // @JoinColumn({ name: 'profile' })
-  // profile: Profile[];
+  @ManyToOne(type => Profile, profile => profile.address)
+  @JoinColumn({ name: 'profile' })
+  profile: Profile[];
 }

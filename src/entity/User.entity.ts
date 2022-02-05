@@ -6,22 +6,27 @@
  */
 import { BaseEntity } from '@entity/Base.entity';
 import { Profile } from '@entity/Profile.entity';
+import { IUser } from '@interfaces/users.interface';
 import bcrypt from 'bcrypt';
 import { IsBoolean, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
 import jwt from 'jsonwebtoken';
-import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity {
+export class User extends BaseEntity implements IUser {
   @Column({ unique: true })
   @IsEmail()
   email: string;
 
-  @Column()
+  @Column({ unique: true })
+  @IsString()
+  userName: string;
+
+  @Column({ nullable: true, unique: true })
   @IsPhoneNumber()
   phoneNumber: string;
 
-  @Column()
+  @Column({ default: false })
   @IsBoolean()
   isActive: boolean;
 
@@ -37,9 +42,9 @@ export class User extends BaseEntity {
   @IsString()
   password: string;
 
-  @OneToOne(type => Profile, profile => profile.user)
-  @JoinColumn({ name: 'profile' })
-  profile: Profile;
+  // @OneToOne(type => Profile)
+  // @JoinColumn({ name: 'profile' })
+  // profile: Profile;
 
   // hash password before inserting into database
   @BeforeInsert()
@@ -53,7 +58,7 @@ export class User extends BaseEntity {
   async createProfile() {
     const profile = new Profile();
     profile.user = this;
-    this.profile = profile;
+    // this.profile = profile;
   }
 
   // generate token for user
@@ -75,7 +80,7 @@ export class User extends BaseEntity {
   }
 
   // get  profile
-  get profileId() {
-    return this.profile;
-  }
+  // get profileId() {
+  //   return this.profile;
+  // }
 }

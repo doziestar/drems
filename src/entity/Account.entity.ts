@@ -33,7 +33,7 @@ export class Transaction extends BaseEntity {
   @IsString()
   account: string;
 
-  @ManyToOne(type => Profile, profile => profile.transactions)
+  @ManyToOne(type => Profile)
   @JoinColumn({ name: 'user' })
   profile: Profile;
 }
