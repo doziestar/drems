@@ -1,5 +1,11 @@
-import { TransactionDocument } from '@interfaces/account.interface';
 import { AddressDocument } from '@interfaces/shared.interface';
+export interface IProfile {
+    bio: string;
+    address: AddressDocument[];
+    dateOfBirth: Date;
+    accountType: string;
+    user: IUser;
+}
 export interface IUser {
     id: string;
     email: string;
@@ -8,13 +14,4 @@ export interface IUser {
     firstName: string;
     lastName: string;
     password: string;
-    profile: string;
-}
-export interface IProfile {
-    bio: string;
-    transactions: TransactionDocument[];
-    address: AddressDocument[];
-    dateOfBirth: string;
-    accountType: string;
-    user: IUser;
 }

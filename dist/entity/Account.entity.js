@@ -43,7 +43,7 @@ let Transaction = class Transaction extends Base_entity_1.BaseEntity {
     (0, tslib_1.__metadata)("design:type", String)
 ], Transaction.prototype, "account", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.ManyToOne)(type => Profile_entity_1.Profile, profile => profile.transactions),
+    (0, typeorm_1.ManyToOne)(type => Profile_entity_1.Profile),
     (0, typeorm_1.JoinColumn)({ name: 'user' }),
     (0, tslib_1.__metadata)("design:type", Profile_entity_1.Profile)
 ], Transaction.prototype, "profile", void 0);

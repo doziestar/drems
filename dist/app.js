@@ -49,7 +49,7 @@ class App {
     }
     initializeRoutes(routes) {
         routes.forEach(route => {
-            this.app.use('/', route.router);
+            this.app.use('/api/v1', route.router);
         });
     }
     initializeSwagger() {

@@ -15,6 +15,9 @@ const class_validator_1 = require("class-validator");
 const jsonwebtoken_1 = (0, tslib_1.__importDefault)(require("jsonwebtoken"));
 const typeorm_1 = require("typeorm");
 let User = class User extends Base_entity_1.BaseEntity {
+    // @OneToOne(type => Profile)
+    // @JoinColumn({ name: 'profile' })
+    // profile: Profile;
     // hash password before inserting into database
     async hashPassword() {
         const salt = await bcrypt_1.default.genSalt(10);
@@ -24,7 +27,7 @@ let User = class User extends Base_entity_1.BaseEntity {
     async createProfile() {
         const profile = new Profile_entity_1.Profile();
         profile.user = this;
-        this.profile = profile;
+        // this.profile = profile;
     }
     // generate token for user
     async generateToken() {
@@ -41,10 +44,6 @@ let User = class User extends Base_entity_1.BaseEntity {
     get fullName() {
         return `${this.firstName} ${this.lastName}`;
     }
-    // get  profile
-    get profileId() {
-        return this.profile;
-    }
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.Column)({ unique: true }),
@@ -52,12 +51,17 @@ let User = class User extends Base_entity_1.BaseEntity {
     (0, tslib_1.__metadata)("design:type", String)
 ], User.prototype, "email", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ unique: true }),
+    (0, class_validator_1.IsString)(),
+    (0, tslib_1.__metadata)("design:type", String)
+], User.prototype, "userName", void 0);
+(0, tslib_1.__decorate)([
+    (0, typeorm_1.Column)({ nullable: true, unique: true }),
     (0, class_validator_1.IsPhoneNumber)(),
     (0, tslib_1.__metadata)("design:type", String)
 ], User.prototype, "phoneNumber", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({ default: false }),
     (0, class_validator_1.IsBoolean)(),
     (0, tslib_1.__metadata)("design:type", Boolean)
 ], User.prototype, "isActive", void 0);
@@ -76,11 +80,6 @@ let User = class User extends Base_entity_1.BaseEntity {
     (0, class_validator_1.IsString)(),
     (0, tslib_1.__metadata)("design:type", String)
 ], User.prototype, "password", void 0);
-(0, tslib_1.__decorate)([
-    (0, typeorm_1.OneToOne)(type => Profile_entity_1.Profile, profile => profile.user),
-    (0, typeorm_1.JoinColumn)({ name: 'profile' }),
-    (0, tslib_1.__metadata)("design:type", Profile_entity_1.Profile)
-], User.prototype, "profile", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.BeforeInsert)(),
     (0, tslib_1.__metadata)("design:type", Function),

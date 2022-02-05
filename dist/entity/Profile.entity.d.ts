@@ -6,18 +6,17 @@
  * @param {type} type
  * @param {type} type
  */
-import { Transaction } from '@entity/Account.entity';
 import { BaseEntity } from '@entity/Base.entity';
 import { Address } from '@entity/Shared.entity';
-import { User } from '@entity/User.entity';
+import { IProfile } from '@interfaces/users.interface';
+import { User } from './User.entity';
 export declare enum AccountType {
     Landlord = "landlord",
     Tenant = "tenant",
     Manager = "manager"
 }
-export declare class Profile extends BaseEntity {
+export declare class Profile extends BaseEntity implements IProfile {
     bio: string;
-    transactions: Transaction[];
     address: Address[];
     dateOfBirth: Date;
     accountType: AccountType;
