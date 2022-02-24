@@ -1,13 +1,14 @@
 // import { TransactionDocument } from '@interfaces/account.interface';
+import { IProperty } from '@interfaces/property.interface';
 import { AddressDocument } from '@interfaces/shared.interface';
 
 export interface IProfile {
   bio: string;
-  // transactions: TransactionDocument[];
   address: AddressDocument[];
   dateOfBirth: Date;
   accountType: string;
   user: IUser;
+  properties: IProperty[];
 }
 export interface IUser {
   id: string;

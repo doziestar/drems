@@ -1,10 +1,11 @@
+import { AddressDocument } from '@/interfaces/shared.interface';
 import { BaseEntity } from '@entity/Base.entity';
 import { Profile } from '@entity/Profile.entity';
 import { IsString } from 'class-validator';
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Address extends BaseEntity {
+export class Address extends BaseEntity implements AddressDocument {
   @Column()
   @IsString()
   street: string;
