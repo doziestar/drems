@@ -12,11 +12,11 @@ export interface IProfile {
 }
 export interface IUser {
   id: string;
-  email: string;
-  phoneNumber: string;
-  isActive: boolean;
-  firstName: string;
-  lastName: string;
+  email?: string;
+  phoneNumber?: string;
+  isActive?: boolean;
+  firstName?: string;
+  lastName?: string;
   password: string;
   // profile: IProfile;
 }

@@ -12,12 +12,11 @@ export interface Property extends General {
   propertyManager: PropertyManager;
 }
 
-
 export interface IProperty {
   id: number;
   propertyType: EnumType;
   propertyName: string;
-  propertyAddress: AddressDocument;
+  propertyAddress: AddressDocument[];
   propertyManager: PropertyManager;
   landlord: Landlord[];
   tenants: Tenant[];
@@ -33,7 +32,6 @@ export interface IPropertyCreate {
   landlord?: Landlord[];
   // tenants: Tenant[];
 }
-
 
 export interface IPropertyFacility {
   property: IProperty;

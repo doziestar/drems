@@ -11,19 +11,20 @@
  * @implements {IProperty}
  */
 
-
+import { PropertyManager } from '@/interfaces/managers.interface';
 import { Profile } from '@entity/Profile.entity';
 import { Landlord } from '@interfaces/landlord.interface';
-import { PropertyManager } from '@interfaces/managers.interface';
+// import { PropertyManager } from '@interfaces/managers.interface';
 import { IProperty } from '@interfaces/property.interface';
-import { AddressDocument } from '@interfaces/shared.interface';
 import { Tenant } from '@interfaces/tenant.interface';
 import { IsArray, IsDate, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { EnumType } from 'typescript';
+import { Address } from './Shared.entity';
 
 @Entity()
 export class Property extends BaseEntity implements IProperty {
+  propertyManager: PropertyManager;
   @PrimaryGeneratedColumn('uuid')
   @IsString()
   id: number;
@@ -36,13 +37,13 @@ export class Property extends BaseEntity implements IProperty {
   @IsString()
   propertyName: string;
 
-  @Column()
-  @IsString()
-  propertyAddress: AddressDocument;
+  @JoinColumn()
+  @OneToMany(type => Address, address => address.property)
+  propertyAddress: Address[];
 
-  @Column()
-  @IsString()
-  propertyManager: PropertyManager;
+  // @Column()
+  // @IsString()
+  // propertyManager: PropertyManager;
 
   @Column()
   @IsArray()
