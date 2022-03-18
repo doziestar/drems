@@ -1,3 +1,5 @@
+import { IProfile } from '@interfaces/users.interface';
+
 export interface TransactionDocument {
   description: string;
   amount: string;
@@ -5,5 +7,5 @@ export interface TransactionDocument {
   status: string;
   date: string;
   account: string;
-  profile: string;
+  profile: IProfile;
 }

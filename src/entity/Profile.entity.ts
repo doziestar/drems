@@ -8,12 +8,12 @@
  */
 
 // import { Transaction } from '@entity/Account.entity';
+import { IProperty } from '@/interfaces/property.interface';
 import { BaseEntity } from '@entity/Base.entity';
 import { Address } from '@entity/Shared.entity';
 import { IProfile } from '@interfaces/users.interface';
 import { IsDate, IsString } from 'class-validator';
-import { Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne } from 'typeorm';
-import { Property } from './Property.entity';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { User } from './User.entity';
 
 export enum AccountType {
@@ -24,6 +24,7 @@ export enum AccountType {
 
 @Entity()
 export class Profile extends BaseEntity implements IProfile {
+  properties: IProperty[];
   @Column({ nullable: true })
   @IsString()
   bio: string;
@@ -43,8 +44,8 @@ export class Profile extends BaseEntity implements IProfile {
   @JoinColumn({ name: 'user' })
   user: User;
 
-  @Column({ nullable: true })
-  @ManyToMany(type => Property, property => property.profiles)
-  @JoinColumn({ name: 'property' })
-  properties: Property[];
+  // @Column({ nullable: true })
+  // @ManyToMany(type => Property, property => property.profiles)
+  // @JoinColumn({ name: 'property' })
+  // properties: Property[];
 }

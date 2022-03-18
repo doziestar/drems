@@ -1,32 +1,41 @@
-import bcrypt from 'bcrypt';
-import config from 'config';
-import jwt from 'jsonwebtoken';
+// import userModel from '@models/users.model';
+import { User } from '@/entity/User.entity';
 import { CreateUserDto } from '@dtos/users.dto';
 import { HttpException } from '@exceptions/HttpException';
 import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
-import userModel from '@models/users.model';
+import { IUser } from '@interfaces/users.interface';
 import { isEmpty } from '@utils/util';
+import bcrypt from 'bcrypt';
+import config from 'config';
+import jwt from 'jsonwebtoken';
 
 class AuthService {
-  public users = userModel;
+  public users = User;
 
-  public async signup(userData: CreateUserDto): Promise<User> {
+  // public async validateUser(payload: DataStoredInToken): Promise<IUser> {
+  //   const user = await this.users.
+  //   if (!user) {
+  //     throw new HttpException(401, 'Invalid credentials');
+  //   }
+  //   return user;
+  // }
+
+  public async signup(userData: CreateUserDto): Promise<IUser> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = this.users.find(user => user.email === userData.email);
+    const findUser: IUser = this.users.
     if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
 
     const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: User = { id: this.users.length + 1, ...userData, password: hashedPassword };
+    const createUserData: IUser = { id: this.users.length + 1, ...userData, password: hashedPassword };
 
     return createUserData;
   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: User }> {
+  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: IUser }> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = this.users.find(user => user.email === userData.email);
+    const findUser: IUser = this.users.find(user => user.email === userData.email);
     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
@@ -38,16 +47,16 @@ class AuthService {
     return { cookie, findUser };
   }
 
-  public async logout(userData: User): Promise<User> {
+  public async logout(userData: IUser): Promise<IUser> {
     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: User = this.users.find(user => user.email === userData.email && user.password === userData.password);
+    const findUser: IUser = this.users.find(user => user.email === userData.email && user.password === userData.password);
     if (!findUser) throw new HttpException(409, "You're not user");
 
     return findUser;
   }
 
-  public createToken(user: User): TokenData {
+  public createToken(user: IUser): TokenData {
     const dataStoredInToken: DataStoredInToken = { id: user.id };
     const secretKey: string = config.get('secretKey');
     const expiresIn: number = 60 * 60;

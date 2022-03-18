@@ -78,9 +78,4 @@ export class User extends BaseEntity implements IUser {
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
-
-  // get  profile
-  // get profileId() {
-  //   return this.profile;
-  // }
 }
