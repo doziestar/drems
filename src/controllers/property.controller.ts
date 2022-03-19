@@ -9,6 +9,7 @@ export class PropertyController {
   public createProperty = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const propertyData: CreatePropertyDto = req.body;
+      console.log(propertyData);
       const createPropertyData: IProperty = await this.propertyRepo.create(propertyData);
 
       res.status(201).json({ data: createPropertyData, message: 'created' });
