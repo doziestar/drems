@@ -78,4 +78,8 @@ export class User extends BaseEntity implements IUser {
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
+
+  async validatePassword(password: string) {
+    return await bcrypt.compare(password, this.password);
+  }
 }

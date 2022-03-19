@@ -18,6 +18,9 @@ export class CreateUserDto {
 
   @IsString()
   public password: string;
+
+  @IsString()
+  public confirmPassword: string;
 }
 
 export class LoginUserDto {

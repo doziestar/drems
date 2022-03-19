@@ -12,9 +12,14 @@ import { getRepository, Repository } from 'typeorm';
 class AuthRepository implements IAuthRepository {
   public async signup(createUserDto: CreateUserDto): Promise<IUser> {
     const userRepository: Repository<User> = getRepository(User);
-    userRepository.create(createUserDto);
-    const user = await userRepository.save(createUserDto);
-    return user;
+    const userExist = await userRepository.findOne({ where: { email: createUserDto.email } });
+    console.log(userExist);
+    if (userExist) {
+      throw new Error('User already exist');
+    }
+    const user = await userRepository.create(createUserDto);
+    const savedUser = await userRepository.save(user);
+    return savedUser;
   }
 
   public async login(loginUserDto: any): Promise<{ user: IUser; token: string }> {

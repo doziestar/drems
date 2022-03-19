@@ -9,6 +9,9 @@ class AuthController {
   public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: CreateUserDto = req.body;
+      if (userData.password !== userData.confirmPassword) {
+        throw new Error('Password does not match');
+      }
       const signUpUserData: IUser = await this.authService.signup(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });
@@ -25,7 +28,7 @@ class AuthController {
 
       // res.setHeader('Set-Cookie', [cookie]);
       res.setHeader('Set-Cookie', [token]);
-      res.status(200).json({ data: user, message: 'login' });
+      res.status(200).json({ data: user, message: 'login', token: token });
     } catch (error) {
       next(error);
     }
