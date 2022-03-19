@@ -42,6 +42,10 @@ export class User extends BaseEntity implements IUser {
   @IsString()
   password: string;
 
+  @Column({ type: 'enum', enum: ['landlord', 'tenant', 'manager'], default: 'tenant' })
+  @IsString()
+  role: string;
+
   // @OneToOne(type => Profile)
   // @JoinColumn({ name: 'profile' })
   // profile: Profile;
