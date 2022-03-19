@@ -56,4 +56,3 @@ const stream = {
     },
 };
 exports.stream = stream;
-//# sourceMappingURL=logger.js.map

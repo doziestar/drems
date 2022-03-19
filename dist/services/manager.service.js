@@ -1,52 +1,50 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-// services for property manager
-const http_exception_1 = require("@exceptions/http.exception");
-const managers_models_1 = require("@models/managers.models");
-class PropertyManagerService {
-    async getPropertyManagers() {
-        const propertyManagers = await managers_models_1.PropertyManager.find();
-        return propertyManagers;
-    }
-    async getPropertyManagerById(propertyManagerId) {
-        const propertyManager = await managers_models_1.PropertyManager.findById(propertyManagerId);
-        if (!propertyManager) {
-            throw new http_exception_1.HttpException(404, 'Property Manager not found');
-        }
-        return propertyManager;
-    }
-    async createPropertyManager(propertyManagerData) {
-        const propertyManager = await managers_models_1.PropertyManager.create(propertyManagerData);
-        return propertyManager;
-    }
-    async updatePropertyManager(propertyManagerId, propertyManagerData) {
-        const propertyManager = await managers_models_1.PropertyManager.findByIdAndUpdate(propertyManagerId, propertyManagerData, { new: true });
-        if (!propertyManager) {
-            throw new http_exception_1.HttpException(404, 'Property Manager not found');
-        }
-        return propertyManager;
-    }
-    async deletePropertyManager(propertyManagerId) {
-        const propertyManager = await managers_models_1.PropertyManager.findByIdAndDelete(propertyManagerId);
-        if (!propertyManager) {
-            throw new http_exception_1.HttpException(404, 'Property Manager not found');
-        }
-        return propertyManager;
-    }
-    async getPropertyManagerByLandlordId(landlordId) {
-        const propertyManager = await managers_models_1.PropertyManager.findOne({ landlord: landlordId });
-        if (!propertyManager) {
-            throw new http_exception_1.HttpException(404, 'Property Manager not found');
-        }
-        return propertyManager;
-    }
-    async getPropertyManagerByPropertyId(propertyId) {
-        const propertyManager = await managers_models_1.PropertyManager.findOne({ property: propertyId });
-        if (!propertyManager) {
-            throw new http_exception_1.HttpException(404, 'Property Manager not found');
-        }
-        return propertyManager;
-    }
-}
-exports.default = PropertyManagerService;
-//# sourceMappingURL=manager.service.js.map
+// // services for property manager
+// import { HttpException } from '../exceptions/HttpException';
+// import { PropertyManager } from '../interfaces/managers.interface';
+// import { PropertyManager as PropertyManagerModel } from '../models/managers.models';
+// class PropertyManagerService {
+//   public async getPropertyManagers(): Promise<PropertyManager[]> {
+//     const propertyManagers: PropertyManager[] = await PropertyManagerModel.find();
+//     return propertyManagers;
+//   }
+//   public async getPropertyManagerById(propertyManagerId: string): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.findById(propertyManagerId);
+//     if (!propertyManager) {
+//       throw new HttpException(404, 'Property Manager not found');
+//     }
+//     return propertyManager;
+//   }
+//   public async createPropertyManager(propertyManagerData: PropertyManager): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.create(propertyManagerData);
+//     return propertyManager;
+//   }
+//   public async updatePropertyManager(propertyManagerId: string, propertyManagerData: PropertyManager): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.findByIdAndUpdate(propertyManagerId, propertyManagerData, { new: true });
+//     if (!propertyManager) {
+//       throw new HttpException(404, 'Property Manager not found');
+//     }
+//     return propertyManager;
+//   }
+//   public async deletePropertyManager(propertyManagerId: string): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.findByIdAndDelete(propertyManagerId);
+//     if (!propertyManager) {
+//       throw new HttpException(404, 'Property Manager not found');
+//     }
+//     return propertyManager;
+//   }
+//   public async getPropertyManagerByLandlordId(landlordId: string): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.findOne({ landlord: landlordId });
+//     if (!propertyManager) {
+//       throw new HttpException(404, 'Property Manager not found');
+//     }
+//     return propertyManager;
+//   }
+//   public async getPropertyManagerByPropertyId(propertyId: string): Promise<PropertyManager> {
+//     const propertyManager: PropertyManager = await PropertyManagerModel.findOne({ property: propertyId });
+//     if (!propertyManager) {
+//       throw new HttpException(404, 'Property Manager not found');
+//     }
+//     return propertyManager;
+//   }
+// }
+// export default PropertyManagerService;

@@ -41,9 +41,9 @@ class TenantController {
     try {
       const tenantId = Number(req.params.id);
       const tenantData: Tenant = req.body;
-      const updateTenantData: Tenant[] = await this.tenantService.updateTenant(tenantId, tenantData);
+      // const updateTenantData: Tenant[] = await this.tenantService.updateTenant(tenantId, tenantData);
 
-      res.status(200).json({ data: updateTenantData, message: 'updated' });
+      // res.status(200).json({ data: updateTenantData, message: 'updated' });
     } catch (error) {
       next(error);
     }
@@ -52,9 +52,9 @@ class TenantController {
   public deleteTenant = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const tenantId = Number(req.params.id);
-      const deleteTenantData: Tenant[] = await this.tenantService.deleteTenant(tenantId);
+      // const deleteTenantData: Tenant[] = await this.tenantService.deleteTenant(tenantId);
 
-      res.status(200).json({ data: deleteTenantData, message: 'deleted' });
+      // res.status(200).json({ data: deleteTenantData, message: 'deleted' });
     } catch (error) {
       next(error);
     }

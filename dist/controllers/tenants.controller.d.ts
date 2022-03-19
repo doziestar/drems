@@ -1,4 +1,4 @@
-import TenantService from '@services/tenant.service';
+import TenantService from '../services/tenant.service';
 import { NextFunction, Request, Response } from 'express';
 declare class TenantController {
     tenantService: TenantService;

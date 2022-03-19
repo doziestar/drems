@@ -1,9 +1,9 @@
 /**
  * Transaction entity
  */
-import { TransactionType } from '@/enum/account.enum';
-import { BaseEntity } from '@entity/Base.entity';
-import { Profile } from '@entity/Profile.entity';
+import { TransactionType } from '../enum/account.enum';
+import { BaseEntity } from './Base.entity';
+import { Profile } from './Profile.entity';
 export declare class Transaction extends BaseEntity {
     description: string;
     amount: string;

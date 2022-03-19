@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const tenant_service_1 = (0, tslib_1.__importDefault)(require("@services/tenant.service"));
+const tenant_service_1 = (0, tslib_1.__importDefault)(require("../services/tenant.service"));
 class TenantController {
     constructor() {
         this.tenantService = new tenant_service_1.default();
@@ -38,8 +38,8 @@ class TenantController {
             try {
                 const tenantId = Number(req.params.id);
                 const tenantData = req.body;
-                const updateTenantData = await this.tenantService.updateTenant(tenantId, tenantData);
-                res.status(200).json({ data: updateTenantData, message: 'updated' });
+                // const updateTenantData: Tenant[] = await this.tenantService.updateTenant(tenantId, tenantData);
+                // res.status(200).json({ data: updateTenantData, message: 'updated' });
             }
             catch (error) {
                 next(error);
@@ -48,8 +48,8 @@ class TenantController {
         this.deleteTenant = async (req, res, next) => {
             try {
                 const tenantId = Number(req.params.id);
-                const deleteTenantData = await this.tenantService.deleteTenant(tenantId);
-                res.status(200).json({ data: deleteTenantData, message: 'deleted' });
+                // const deleteTenantData: Tenant[] = await this.tenantService.deleteTenant(tenantId);
+                // res.status(200).json({ data: deleteTenantData, message: 'deleted' });
             }
             catch (error) {
                 next(error);
@@ -58,4 +58,3 @@ class TenantController {
     }
 }
 exports.default = TenantController;
-//# sourceMappingURL=tenants.controller.js.map

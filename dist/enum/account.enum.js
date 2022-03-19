@@ -6,4 +6,3 @@ var TransactionType;
     TransactionType["Income"] = "income";
     TransactionType["Expense"] = "expense";
 })(TransactionType = exports.TransactionType || (exports.TransactionType = {}));
-//# sourceMappingURL=account.enum.js.map

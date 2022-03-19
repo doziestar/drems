@@ -13,4 +13,3 @@ class IndexController {
     }
 }
 exports.default = IndexController;
-//# sourceMappingURL=index.controller.js.map

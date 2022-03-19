@@ -1,10 +1,32 @@
+import { EnumType } from 'typescript';
 import { General } from './general.interface';
 import { Landlord } from './landlord.interface';
 import { PropertyManager } from './managers.interface';
+import { AddressDocument } from './shared.interface';
 import { Tenant } from './tenant.interface';
-interface Property extends General {
+export interface Property extends General {
     landlord: Landlord;
     tenants: Tenant[];
     propertyManager: PropertyManager;
 }
-export { Property };
+export interface IProperty {
+    id: number;
+    propertyType: EnumType;
+    propertyName: string;
+    propertyAddress: AddressDocument[];
+    propertyManager: PropertyManager;
+    landlord: Landlord[];
+    tenants: Tenant[];
+    createdAt: Date;
+    updatedAt: Date;
+}
+export interface IPropertyCreate {
+    propertyType: EnumType;
+    propertyName: string;
+    propertyAddress: AddressDocument;
+    propertyManager?: PropertyManager;
+    landlord?: Landlord[];
+}
+export interface IPropertyFacility {
+    property: IProperty;
+}

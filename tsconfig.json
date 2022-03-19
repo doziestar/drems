@@ -11,7 +11,7 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "pretty": true,
-    "sourceMap": true,
+    // "sourceMap": true,
     "declaration": true,
     "outDir": "./dist",
     "allowJs": true,

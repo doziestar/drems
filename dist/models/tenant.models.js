@@ -42,4 +42,3 @@ const TenantSchema = new mongoose_1.Schema({
 });
 const TenantModel = (0, mongoose_1.model)('Tenant', TenantSchema);
 exports.TenantModel = TenantModel;
-//# sourceMappingURL=tenant.models.js.map

@@ -8,8 +8,8 @@ const tslib_1 = require("tslib");
  * @author Chidozie C. Okafor
  *
  */
-const Base_entity_1 = require("@entity/Base.entity");
-const Profile_entity_1 = require("@entity/Profile.entity");
+const Base_entity_1 = require("./Base.entity");
+const Profile_entity_1 = require("./Profile.entity");
 const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
 const class_validator_1 = require("class-validator");
 const jsonwebtoken_1 = (0, tslib_1.__importDefault)(require("jsonwebtoken"));
@@ -96,4 +96,3 @@ User = (0, tslib_1.__decorate)([
     (0, typeorm_1.Entity)()
 ], User);
 exports.User = User;
-//# sourceMappingURL=User.entity.js.map

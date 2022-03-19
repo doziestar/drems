@@ -4,8 +4,8 @@
  * @author Chidozie C. Okafor
  *
  */
-import { BaseEntity } from '@entity/Base.entity';
-import { IUser } from '@interfaces/users.interface';
+import { BaseEntity } from './Base.entity';
+import { IUser } from '../interfaces/users.interface';
 export declare class User extends BaseEntity implements IUser {
     email: string;
     userName: string;

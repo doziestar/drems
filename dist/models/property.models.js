@@ -43,4 +43,3 @@ const propertySchema = new mongoose_1.Schema({
 });
 const PropertyModel = (0, mongoose_1.model)('Property', propertySchema);
 exports.PropertyModel = PropertyModel;
-//# sourceMappingURL=property.models.js.map

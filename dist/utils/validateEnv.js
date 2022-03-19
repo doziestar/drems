@@ -8,4 +8,3 @@ const validateEnv = () => {
     });
 };
 exports.default = validateEnv;
-//# sourceMappingURL=validateEnv.js.map

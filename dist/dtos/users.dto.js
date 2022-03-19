@@ -41,4 +41,3 @@ class LoginUserDto {
     (0, tslib_1.__metadata)("design:type", String)
 ], LoginUserDto.prototype, "password", void 0);
 exports.LoginUserDto = LoginUserDto;
-//# sourceMappingURL=users.dto.js.map

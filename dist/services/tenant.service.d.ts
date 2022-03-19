@@ -1,5 +1,5 @@
 /// <reference types="mongoose" />
-import { Tenant } from '@/interfaces/tenant.interface';
+import { Tenant } from '../interfaces/tenant.interface';
 declare class TenantService {
     tenants: import("mongoose").Model<Tenant & import("mongoose").Document<any, any, any>, {}, {}, {}>;
     getTenants: () => Promise<Tenant[]>;

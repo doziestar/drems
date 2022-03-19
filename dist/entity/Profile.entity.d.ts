@@ -6,9 +6,10 @@
  * @param {type} type
  * @param {type} type
  */
-import { BaseEntity } from '@entity/Base.entity';
-import { Address } from '@entity/Shared.entity';
-import { IProfile } from '@interfaces/users.interface';
+import { IProperty } from '../interfaces/property.interface';
+import { BaseEntity } from './Base.entity';
+import { Address } from './Shared.entity';
+import { IProfile } from '../interfaces/users.interface';
 import { User } from './User.entity';
 export declare enum AccountType {
     Landlord = "landlord",
@@ -16,6 +17,7 @@ export declare enum AccountType {
     Manager = "manager"
 }
 export declare class Profile extends BaseEntity implements IProfile {
+    properties: IProperty[];
     bio: string;
     address: Address[];
     dateOfBirth: Date;

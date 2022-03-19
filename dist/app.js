@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
-const error_middleware_1 = (0, tslib_1.__importDefault)(require("@middlewares/error.middleware"));
-const logger_1 = require("@utils/logger");
+const error_middleware_1 = (0, tslib_1.__importDefault)(require("./middlewares/error.middleware"));
+const logger_1 = require("./utils/logger");
 const compression_1 = (0, tslib_1.__importDefault)(require("compression"));
 const config_1 = (0, tslib_1.__importDefault)(require("config"));
 const cookie_parser_1 = (0, tslib_1.__importDefault)(require("cookie-parser"));
@@ -80,4 +80,3 @@ class App {
     }
 }
 exports.default = App;
-//# sourceMappingURL=app.js.map

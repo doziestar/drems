@@ -10,9 +10,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Profile = exports.AccountType = void 0;
 const tslib_1 = require("tslib");
-// import { Transaction } from '@entity/Account.entity';
-const Base_entity_1 = require("@entity/Base.entity");
-const Shared_entity_1 = require("@entity/Shared.entity");
+const Base_entity_1 = require("./Base.entity");
+const Shared_entity_1 = require("./Shared.entity");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 const User_entity_1 = require("./User.entity");
@@ -52,4 +51,3 @@ Profile = (0, tslib_1.__decorate)([
     (0, typeorm_1.Entity)()
 ], Profile);
 exports.Profile = Profile;
-//# sourceMappingURL=Profile.entity.js.map

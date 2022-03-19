@@ -22,4 +22,3 @@ class BaseEntity {
     (0, tslib_1.__metadata)("design:type", Date)
 ], BaseEntity.prototype, "updatedAt", void 0);
 exports.BaseEntity = BaseEntity;
-//# sourceMappingURL=Base.entity.js.map

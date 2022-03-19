@@ -5,9 +5,9 @@ const tslib_1 = require("tslib");
 /**
  * Transaction entity
  */
-const account_enum_1 = require("@/enum/account.enum");
-const Base_entity_1 = require("@entity/Base.entity");
-const Profile_entity_1 = require("@entity/Profile.entity");
+const account_enum_1 = require("../enum/account.enum");
+const Base_entity_1 = require("./Base.entity");
+const Profile_entity_1 = require("./Profile.entity");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
 let Transaction = class Transaction extends Base_entity_1.BaseEntity {
@@ -51,4 +51,3 @@ Transaction = (0, tslib_1.__decorate)([
     (0, typeorm_1.Entity)()
 ], Transaction);
 exports.Transaction = Transaction;
-//# sourceMappingURL=Account.entity.js.map

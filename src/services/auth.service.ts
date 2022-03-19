@@ -1,72 +1,72 @@
-// import userModel from '@models/users.model';
-import { User } from '@/entity/User.entity';
-import { CreateUserDto } from '@dtos/users.dto';
-import { HttpException } from '@exceptions/HttpException';
-import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
-import { IUser } from '@interfaces/users.interface';
-import { isEmpty } from '@utils/util';
-import bcrypt from 'bcrypt';
-import config from 'config';
-import jwt from 'jsonwebtoken';
+// // import userModel from '@models/users.model';
+// import { User } from '@/entity/User.entity';
+// import { CreateUserDto } from '@dtos/users.dto';
+// import { HttpException } from '@exceptions/HttpException';
+// import { DataStoredInToken, TokenData } from '@interfaces/auth.interface';
+// import { IUser } from '@interfaces/users.interface';
+// import { isEmpty } from '@utils/util';
+// import bcrypt from 'bcrypt';
+// import config from 'config';
+// import jwt from 'jsonwebtoken';
 
-class AuthService {
-  public users = User;
+// class AuthService {
+//   public users = User;
 
-  // public async validateUser(payload: DataStoredInToken): Promise<IUser> {
-  //   const user = await this.users.
-  //   if (!user) {
-  //     throw new HttpException(401, 'Invalid credentials');
-  //   }
-  //   return user;
-  // }
+//   // public async validateUser(payload: DataStoredInToken): Promise<IUser> {
+//   //   const user = await this.users.
+//   //   if (!user) {
+//   //     throw new HttpException(401, 'Invalid credentials');
+//   //   }
+//   //   return user;
+//   // }
 
-  public async signup(userData: CreateUserDto): Promise<IUser> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+//   public async signup(userData: CreateUserDto): Promise<IUser> {
+//     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: IUser = this.users.
-    if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
+//     const findUser: IUser = this.users.find(user => user.email === userData.email);
+//     if (findUser) throw new HttpException(409, `You're email ${userData.email} already exists`);
 
-    const hashedPassword = await bcrypt.hash(userData.password, 10);
-    const createUserData: IUser = { id: this.users.length + 1, ...userData, password: hashedPassword };
+//     const hashedPassword = await bcrypt.hash(userData.password, 10);
+//     const createUserData: IUser = { id: this.users.length + 1, ...userData, password: hashedPassword };
 
-    return createUserData;
-  }
+//     return createUserData;
+//   }
 
-  public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: IUser }> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+//   public async login(userData: CreateUserDto): Promise<{ cookie: string; findUser: IUser }> {
+//     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: IUser = this.users.find(user => user.email === userData.email);
-    if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
+//     const findUser: IUser = this.users.find(user => user.email === userData.email);
+//     if (!findUser) throw new HttpException(409, `You're email ${userData.email} not found`);
 
-    const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
-    if (!isPasswordMatching) throw new HttpException(409, "You're password not matching");
+//     const isPasswordMatching: boolean = await bcrypt.compare(userData.password, findUser.password);
+//     if (!isPasswordMatching) throw new HttpException(409, "You're password not matching");
 
-    const tokenData = this.createToken(findUser);
-    const cookie = this.createCookie(tokenData);
+//     const tokenData = this.createToken(findUser);
+//     const cookie = this.createCookie(tokenData);
 
-    return { cookie, findUser };
-  }
+//     return { cookie, findUser };
+//   }
 
-  public async logout(userData: IUser): Promise<IUser> {
-    if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
+//   public async logout(userData: IUser): Promise<IUser> {
+//     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
 
-    const findUser: IUser = this.users.find(user => user.email === userData.email && user.password === userData.password);
-    if (!findUser) throw new HttpException(409, "You're not user");
+//     const findUser: IUser = this.users.find(user => user.email === userData.email && user.password === userData.password);
+//     if (!findUser) throw new HttpException(409, "You're not user");
 
-    return findUser;
-  }
+//     return findUser;
+//   }
 
-  public createToken(user: IUser): TokenData {
-    const dataStoredInToken: DataStoredInToken = { id: user.id };
-    const secretKey: string = config.get('secretKey');
-    const expiresIn: number = 60 * 60;
+//   public createToken(user: IUser): TokenData {
+//     const dataStoredInToken: DataStoredInToken = { id: user.id };
+//     const secretKey: string = config.get('secretKey');
+//     const expiresIn: number = 60 * 60;
 
-    return { expiresIn, token: jwt.sign(dataStoredInToken, secretKey, { expiresIn }) };
-  }
+//     return { expiresIn, token: jwt.sign(dataStoredInToken, secretKey, { expiresIn }) };
+//   }
 
-  public createCookie(tokenData: TokenData): string {
-    return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
-  }
-}
+//   public createCookie(tokenData: TokenData): string {
+//     return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
+//   }
+// }
 
-export default AuthService;
+// export default AuthService;

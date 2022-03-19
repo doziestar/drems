@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const Auth_repo_1 = (0, tslib_1.__importDefault)(require("@repositories/Auth.repo"));
+const Auth_repo_1 = (0, tslib_1.__importDefault)(require("../repositories/Auth.repo"));
 class AuthController {
     constructor() {
         this.authService = new Auth_repo_1.default();
@@ -41,4 +41,3 @@ class AuthController {
     }
 }
 exports.default = AuthController;
-//# sourceMappingURL=auth.controller.js.map
