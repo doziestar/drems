@@ -34,7 +34,7 @@ export class PropertyRepository {
   public async findByManager(manager: IUser): Promise<IProperty[]> {
     const properties: IProperty[] = await this.propertyRepository.find({
       where: {
-        propertyManager: manager,
+        user: manager,
       },
     });
     return properties;
@@ -43,7 +43,7 @@ export class PropertyRepository {
   public async findByLandlord(landlord: IUser): Promise<IProperty[]> {
     const properties: IProperty[] = await this.propertyRepository.find({
       where: {
-        landlord: landlord,
+        user: landlord,
       },
     });
     return properties;
@@ -52,7 +52,7 @@ export class PropertyRepository {
   public async findByTenant(tenant: IUser): Promise<IProperty[]> {
     const properties: IProperty[] = await this.propertyRepository.find({
       where: {
-        tenants: tenant,
+        user: tenant,
       },
     });
     return properties;

@@ -11,12 +11,11 @@
  * @implements {IProperty}
  */
 
-import { IUser } from '@/interfaces/users.interface';
 import { Address } from '@entity/Shared.entity';
 import { User } from '@entity/User.entity';
 import { IProperty } from '@interfaces/property.interface';
-import { IsArray, IsDate, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { IsDate, IsString } from 'class-validator';
+import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Property extends BaseEntity implements IProperty {
@@ -34,19 +33,11 @@ export class Property extends BaseEntity implements IProperty {
 
   @JoinColumn()
   @OneToMany(type => Address, address => address.property)
-  propertyAddress: Address[];
+  propertyAddress: Address;
 
-  @Column()
-  @IsString()
-  propertyManager: User;
-
-  @Column()
-  @IsArray()
-  landlord: User[];
-
-  @Column()
-  @IsArray()
-  tenants: IUser[];
+  @ManyToMany(type => User, user => user.property)
+  @JoinColumn({ name: 'user' })
+  user: User;
 
   @Column()
   @IsDate()
