@@ -14,21 +14,21 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Property = void 0;
 const tslib_1 = require("tslib");
-// import { Tenant } from '../interfaces/tenant.interface';
+const Shared_entity_1 = require("./Shared.entity");
+const User_entity_1 = require("./User.entity");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
-const Shared_entity_1 = require("./Shared.entity");
 let Property = class Property extends typeorm_1.BaseEntity {
 };
 (0, tslib_1.__decorate)([
     (0, typeorm_1.PrimaryGeneratedColumn)('uuid'),
     (0, class_validator_1.IsString)(),
-    (0, tslib_1.__metadata)("design:type", Number)
+    (0, tslib_1.__metadata)("design:type", String)
 ], Property.prototype, "id", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.Column)({ type: 'enum', enum: ['HOUSE', 'APARTMENT', 'OFFICE', 'SHOP', 'STORE', 'WAREHOUSE', 'OTHER'] }),
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['APARTMENT', 'OFFICE', 'SHOP', 'STORE', 'WAREHOUSE', 'OTHER'], default: 'APARTMENT' }),
     (0, class_validator_1.IsString)(),
-    (0, tslib_1.__metadata)("design:type", Object)
+    (0, tslib_1.__metadata)("design:type", String)
 ], Property.prototype, "propertyType", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.Column)(),
@@ -38,8 +38,13 @@ let Property = class Property extends typeorm_1.BaseEntity {
 (0, tslib_1.__decorate)([
     (0, typeorm_1.JoinColumn)(),
     (0, typeorm_1.OneToMany)(type => Shared_entity_1.Address, address => address.property),
-    (0, tslib_1.__metadata)("design:type", Array)
+    (0, tslib_1.__metadata)("design:type", Shared_entity_1.Address)
 ], Property.prototype, "propertyAddress", void 0);
+(0, tslib_1.__decorate)([
+    (0, typeorm_1.ManyToMany)(type => User_entity_1.User, user => user.property),
+    (0, typeorm_1.JoinColumn)({ name: 'user' }),
+    (0, tslib_1.__metadata)("design:type", User_entity_1.User)
+], Property.prototype, "user", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.Column)(),
     (0, class_validator_1.IsDate)(),

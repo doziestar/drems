@@ -5,6 +5,7 @@ export declare class CreateUserDto {
     firstName?: string;
     lastName?: string;
     password: string;
+    confirmPassword: string;
 }
 export declare class LoginUserDto {
     email: string;

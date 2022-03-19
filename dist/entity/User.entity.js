@@ -14,6 +14,7 @@ const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
 const class_validator_1 = require("class-validator");
 const jsonwebtoken_1 = (0, tslib_1.__importDefault)(require("jsonwebtoken"));
 const typeorm_1 = require("typeorm");
+const Property_entity_1 = require("./Property.entity");
 let User = class User extends Base_entity_1.BaseEntity {
     // @OneToOne(type => Profile)
     // @JoinColumn({ name: 'profile' })
@@ -43,6 +44,9 @@ let User = class User extends Base_entity_1.BaseEntity {
     // get full name
     get fullName() {
         return `${this.firstName} ${this.lastName}`;
+    }
+    async validatePassword(password) {
+        return await bcrypt_1.default.compare(password, this.password);
     }
 };
 (0, tslib_1.__decorate)([
@@ -80,6 +84,15 @@ let User = class User extends Base_entity_1.BaseEntity {
     (0, class_validator_1.IsString)(),
     (0, tslib_1.__metadata)("design:type", String)
 ], User.prototype, "password", void 0);
+(0, tslib_1.__decorate)([
+    (0, typeorm_1.Column)({ type: 'enum', enum: ['landlord', 'tenant', 'manager'], default: 'tenant' }),
+    (0, class_validator_1.IsString)(),
+    (0, tslib_1.__metadata)("design:type", String)
+], User.prototype, "role", void 0);
+(0, tslib_1.__decorate)([
+    (0, typeorm_1.ManyToMany)(type => Property_entity_1.Property, property => property.user),
+    (0, tslib_1.__metadata)("design:type", Array)
+], User.prototype, "property", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.BeforeInsert)(),
     (0, tslib_1.__metadata)("design:type", Function),

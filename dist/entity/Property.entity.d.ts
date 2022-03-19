@@ -10,21 +10,16 @@
  * @implements {Entity}
  * @implements {IProperty}
  */
-import { Landlord } from '../interfaces/landlord.interface';
-import { PropertyManager } from '../interfaces/managers.interface';
-import { Tenant } from '../interfaces/tenant.interface';
+import { Address } from './Shared.entity';
+import { User } from './User.entity';
 import { IProperty } from '../interfaces/property.interface';
 import { BaseEntity } from 'typeorm';
-import { EnumType } from 'typescript';
-import { Address } from './Shared.entity';
 export declare class Property extends BaseEntity implements IProperty {
-    landlord: Landlord[];
-    tenants: Tenant[];
-    propertyManager: PropertyManager;
-    id: number;
-    propertyType: EnumType;
+    id: string;
+    propertyType: string;
     propertyName: string;
-    propertyAddress: Address[];
+    propertyAddress: Address;
+    user: User;
     createdAt: Date;
     updatedAt: Date;
 }

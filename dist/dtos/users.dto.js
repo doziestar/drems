@@ -29,6 +29,10 @@ class CreateUserDto {
     (0, class_validator_1.IsString)(),
     (0, tslib_1.__metadata)("design:type", String)
 ], CreateUserDto.prototype, "password", void 0);
+(0, tslib_1.__decorate)([
+    (0, class_validator_1.IsString)(),
+    (0, tslib_1.__metadata)("design:type", String)
+], CreateUserDto.prototype, "confirmPassword", void 0);
 exports.CreateUserDto = CreateUserDto;
 class LoginUserDto {
 }

@@ -6,15 +6,17 @@ import { IUser } from '@interfaces/users.interface';
 import { getRepository, Repository } from 'typeorm';
 
 export class PropertyRepository {
-  propertyRepository: Repository<Property> = getRepository(Property);
   public async create(property: CreatePropertyDto): Promise<IProperty> {
-    const newProperty: IProperty = await this.propertyRepository.create(property);
-    await this.propertyRepository.save(newProperty);
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+    const newProperty: IProperty = await propertyRepository.create(property);
+    await propertyRepository.save(newProperty);
     return newProperty;
   }
 
   public async findById(id: string): Promise<IProperty> {
-    const property: IProperty = await this.propertyRepository.findOne({
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    const property: IProperty = await propertyRepository.findOne({
       where: {
         id,
       },
@@ -23,7 +25,9 @@ export class PropertyRepository {
   }
 
   public async findByAddress(address: AddressDocument): Promise<IProperty[]> {
-    const properties: IProperty[] = await this.propertyRepository.find({
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    const properties: IProperty[] = await propertyRepository.find({
       where: {
         propertyAddress: address,
       },
@@ -32,7 +36,9 @@ export class PropertyRepository {
   }
 
   public async findByManager(manager: IUser): Promise<IProperty[]> {
-    const properties: IProperty[] = await this.propertyRepository.find({
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    const properties: IProperty[] = await propertyRepository.find({
       where: {
         user: manager,
       },
@@ -41,7 +47,9 @@ export class PropertyRepository {
   }
 
   public async findByLandlord(landlord: IUser): Promise<IProperty[]> {
-    const properties: IProperty[] = await this.propertyRepository.find({
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    const properties: IProperty[] = await propertyRepository.find({
       where: {
         user: landlord,
       },
@@ -50,7 +58,9 @@ export class PropertyRepository {
   }
 
   public async findByTenant(tenant: IUser): Promise<IProperty[]> {
-    const properties: IProperty[] = await this.propertyRepository.find({
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    const properties: IProperty[] = await propertyRepository.find({
       where: {
         user: tenant,
       },
@@ -58,12 +68,17 @@ export class PropertyRepository {
     return properties;
   }
 
-  public async update(property: IProperty): Promise<IProperty> {
-    const updatedProperty: IProperty = await this.propertyRepository.save(property);
-    return updatedProperty;
+  public async update(property: IProperty, id: string): Promise<IProperty> {
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    if (await propertyRepository.update(id, property)) {
+      return property;
+    }
   }
 
-  public async delete(id: number): Promise<void> {
-    await this.propertyRepository.delete(id);
+  public async delete(id: string): Promise<void> {
+    const propertyRepository: Repository<IProperty> = getRepository(Property);
+
+    await propertyRepository.delete(id);
   }
 }
