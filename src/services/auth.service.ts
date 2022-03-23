@@ -7,11 +7,12 @@ import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@entity/User.entity';
 import { IAuthRepository } from '@interfaces/Authrepo.interface';
 import { IUser } from '@interfaces/users.interface';
-import { getRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { UdremsData } from '../dataSource';
 
-class AuthRepository implements IAuthRepository {
+class AuthService implements IAuthRepository {
   public async signup(createUserDto: CreateUserDto): Promise<IUser> {
-    const userRepository: Repository<User> = getRepository(User);
+    const userRepository: Repository<User> = UdremsData.getRepository(User);
     const userExist = await userRepository.findOne({ where: { email: createUserDto.email } });
     console.log(userExist);
     if (userExist) {
@@ -23,7 +24,7 @@ class AuthRepository implements IAuthRepository {
   }
 
   public async login(loginUserDto: any): Promise<{ user: IUser; token: string }> {
-    const userRepository: Repository<User> = getRepository(User);
+    const userRepository: Repository<User> = UdremsData.getRepository(User);
     const user = await userRepository.findOne({
       where: { email: loginUserDto.email },
     });
@@ -41,4 +42,4 @@ class AuthRepository implements IAuthRepository {
   }
 }
 
-export default AuthRepository;
+export default AuthService;

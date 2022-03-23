@@ -1,10 +1,10 @@
 import { CreateUserDto } from '@dtos/users.dto';
 import { IUser } from '@interfaces/users.interface';
-import AuthRepository from '@repositories/Auth.repo';
+import AuthService from '@services/auth.service';
 import { NextFunction, Request, Response } from 'express';
 
 class AuthController {
-  public authService = new AuthRepository();
+  public authService = new AuthService();
 
   public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
