@@ -18,5 +18,7 @@ export interface IUser {
   firstName?: string;
   lastName?: string;
   password: string;
-  // profile: IProfile;
+  profile: IProfile;
+  isVerified?: boolean;
+  role: string;
 }

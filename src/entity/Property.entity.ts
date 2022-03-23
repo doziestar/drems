@@ -16,6 +16,7 @@ import { User } from '@entity/User.entity';
 import { IProperty } from '@interfaces/property.interface';
 import { IsDate, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Profile } from './Profile.entity';
 
 @Entity()
 export class Property extends BaseEntity implements IProperty {
@@ -31,12 +32,12 @@ export class Property extends BaseEntity implements IProperty {
   @IsString()
   propertyName: string;
 
-  @OneToMany(type => Address, address => address.property)
+  @OneToMany(() => Address, address => address.property)
   propertyAddress: Address;
 
-  @ManyToMany(type => User, user => user.property)
+  @ManyToMany(() => Profile, user => user.properties)
   @JoinTable()
-  user: User[];
+  profile: Profile[];
 
   @Column()
   @IsDate()

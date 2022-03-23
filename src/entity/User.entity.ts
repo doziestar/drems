@@ -10,8 +10,7 @@ import { IUser } from '@interfaces/users.interface';
 import bcrypt from 'bcrypt';
 import { IsBoolean, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
 import jwt from 'jsonwebtoken';
-import { BeforeInsert, Column, Entity, ManyToMany } from 'typeorm';
-import { Property } from './Property.entity';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity implements IUser {
@@ -47,12 +46,13 @@ export class User extends BaseEntity implements IUser {
   @IsString()
   role: string;
 
-  @ManyToMany(type => Property, property => property.user)
-  property: Property[];
+  @IsBoolean()
+  @Column({ default: false })
+  isVerified: boolean;
 
-  // @OneToOne(type => Profile)
-  // @JoinColumn({ name: 'profile' })
-  // profile: Profile;
+  @OneToOne(() => Profile, profile => profile.user)
+  @JoinColumn({ name: 'profile' })
+  profile: Profile;
 
   // hash password before inserting into database
   @BeforeInsert()

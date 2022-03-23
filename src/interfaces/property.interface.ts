@@ -1,9 +1,9 @@
 // interface for property
 import { AddressDocument } from '@interfaces/shared.interface';
-import { IUser } from '@interfaces/users.interface';
+import { IProfile } from '@interfaces/users.interface';
 
 export interface Property {
-  user: IUser[];
+  profile: IProfile[];
   // tenants: IUser;
   // propertyManager: IUser;
 }
