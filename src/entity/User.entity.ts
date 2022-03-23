@@ -63,15 +63,15 @@ export class User extends BaseEntity implements IUser {
 
   // create profile for user on signup
   @BeforeInsert()
-  async createProfile() {
-    const profile = new Profile();
+  async createProfile(): Promise<void> {
+    const profile = await new Profile();
     profile.user = this;
     // this.profile = profile;
   }
 
   // generate token for user
-  async generateToken() {
-    const token = jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
+  async generateToken(): Promise<string> {
+    const token = await jwt.sign({ id: this.id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
     return token;

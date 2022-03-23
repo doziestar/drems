@@ -1,60 +1,25 @@
-// import { CreateUserDto } from '@dtos/users.dto';
-// import { HttpException } from '@exceptions/HttpException';
-// import { IUser } from '@interfaces/users.interface';
-// import userModel from '@models/users.model';
-// import { isEmpty } from '@utils/util';
-// import bcrypt from 'bcrypt';
+import { UdremsData } from '@/dataSource';
+import { User } from '@/entity/User.entity';
+import { isEmpty } from '@utils/util';
+import { Repository } from 'typeorm';
 
-// class UserService {
-//   public users = userModel;
+class UserService {
+  public users: Repository<User> = UdremsData.getRepository(User);
 
-//   public async findAllUser(): Promise<IUser[]> {
-//     const users: IUser[] = this.users;
-//     return users;
-//   }
+  public async checkUserExist(email: string): Promise<boolean> {
+    const user = await this.users.findOne({ where: { email } });
+    return isEmpty(user);
+  }
 
-//   public async findUserById(userId: number): Promise<IUser> {
-//     const findUser: IUser = this.users.find(user => user.id === userId);
-//     if (!findUser) throw new HttpException(409, "You're not user");
+  public async checkUserNameExist(userName: string): Promise<boolean> {
+    const user = await this.users.findOne({ where: { userName } });
+    return isEmpty(user);
+  }
 
-//     return findUser;
-//   }
+  public async checkUserPhoneExist(phoneNumber: string): Promise<boolean> {
+    const user = await this.users.findOne({ where: { phoneNumber } });
+    return isEmpty(user);
+  }
+}
 
-//   public async createUser(userData: CreateUserDto): Promise<IUser> {
-//     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-
-//     const findUser: IUser = this.users.find(user => user.email === userData.email);
-//     if (findUser) throw new HttpException(409, `Your email ${userData.email} already exists`);
-
-//     const hashedPassword = await bcrypt.hash(userData.password, 10);
-//     const createUserData: IUser = { id: (this.users.length + 1).toString(), ...userData, password: hashedPassword };
-//     this.users = [...this.users, createUserData];
-
-//     return createUserData;
-//   }
-
-//   public async updateUser(userId: number, userData: CreateUserDto): Promise<IUser[]> {
-//     if (isEmpty(userData)) throw new HttpException(400, "You're not userData");
-
-//     const findUser: IUser = this.users.find(user => user.id === userId);
-//     if (!findUser) throw new HttpException(409, "You're not user");
-
-//     const hashedPassword = await bcrypt.hash(userData.password, 10);
-//     const updateUserData: IUser[] = this.users.map((user: IUser) => {
-//       if (user.id === findUser.id) user = { id: userId.toString(), ...userData, password: hashedPassword };
-//       return user;
-//     });
-
-//     return updateUserData;
-//   }
-
-//   public async deleteUser(userId: number): Promise<IUser[]> {
-//     const findUser: IUser = this.users.find(user => user.id === userId);
-//     if (!findUser) throw new HttpException(409, "You're not user");
-
-//     const deleteUserData: IUser[] = this.users.filter(user => user.id !== findUser.id);
-//     return deleteUserData;
-//   }
-// }
-
-// export default UserService;
+export default UserService;

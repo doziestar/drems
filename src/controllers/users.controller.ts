@@ -1,65 +1,38 @@
-// import { CreateUserDto } from '@dtos/users.dto';
-// import { IUser } from '@interfaces/users.interface';
-// import userService from '@services/users.service';
-// import { NextFunction, Request, Response } from 'express';
+import userService from '@services/users.service';
+import { NextFunction, Request, Response } from 'express';
 
-// class UsersController {
-//   public userService = new userService();
+class UsersController {
+  public userService = new userService();
 
-//   public getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const findAllUsersData: IUser[] = await this.userService.findAllUser();
+  public checkPhone = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const exist = await this.userService.checkUserPhoneExist(req.body);
 
-//       res.status(200).json({ data: findAllUsersData, message: 'findAll' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+      res.status(200).json({ data: exist, message: 'check phone exist' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
-//   public getUserById = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const userId = Number(req.params.id);
-//       const findOneUserData: IUser = await this.userService.findUserById(userId);
+  public checkEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const exist = await this.userService.checkUserExist(req.body);
 
-//       res.status(200).json({ data: findOneUserData, message: 'findOne' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+      res.status(200).json({ data: exist, message: 'Check Email Exist' });
+    } catch (error) {
+      next(error);
+    }
+  };
 
-//   public createUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const userData: CreateUserDto = req.body;
-//       const createUserData: IUser = await this.userService.createUser(userData);
+  public checkUserName = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const exist = await this.userService.checkUserNameExist(req.body);
 
-//       res.status(201).json({ data: createUserData, message: 'created' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+      res.status(201).json({ data: exist, message: 'Check UserName Exist' });
+    } catch (error) {
+      next(error);
+    }
+  };
+}
 
-//   public updateUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const userId = Number(req.params.id);
-//       const userData: CreateUserDto = req.body;
-//       const updateUserData: IUser[] = await this.userService.updateUser(userId, userData);
-
-//       res.status(200).json({ data: updateUserData, message: 'updated' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-
-//   public deleteUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const userId = Number(req.params.id);
-//       const deleteUserData: IUser[] = await this.userService.deleteUser(userId);
-
-//       res.status(200).json({ data: deleteUserData, message: 'deleted' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-// }
-
-// export default UsersController;
+export default UsersController;
