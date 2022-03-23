@@ -9,9 +9,10 @@ class AuthController {
   public signUp = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const userData: CreateUserDto = req.body;
-      if (userData.password !== userData.confirmPassword) {
-        throw new Error('Password does not match');
-      }
+      // console.log(userData);
+      // if (userData.password !== userData.confirmPassword) {
+      //   throw new Error('Password does not match');
+      // }
       const signUpUserData: IUser = await this.authService.signup(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });

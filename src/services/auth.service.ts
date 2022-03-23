@@ -16,8 +16,13 @@ class AuthService implements IAuthRepository {
   public async signup(createUserDto: CreateUserDto): Promise<IUser> {
     const userRepository: Repository<User> = UdremsData.getRepository(User);
     const userExist = await userRepository.findOne({ where: { email: createUserDto.email } });
-    console.log(userExist);
-    if (userExist) throw new HttpException(409, 'User already exist');
+    if (userExist) throw new HttpException(409, 'user already exist');
+
+    const userExist2 = await userRepository.findOne({ where: { userName: createUserDto.userName } });
+    if (userExist2) throw new HttpException(409, 'username already exist');
+
+    const userExist3 = await userRepository.findOne({ where: { phoneNumber: createUserDto.phoneNumber } });
+    if (userExist3) throw new HttpException(409, 'Phone number already exist');
 
     const user = await userRepository.create(createUserDto);
     const savedUser = await userRepository.save(user);
