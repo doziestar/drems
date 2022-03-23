@@ -3,12 +3,12 @@
  * @description This is authentication repository for user authentication
  * @param {type} type
  */
+import { UdremsData } from '@/dataSource';
 import { CreateUserDto } from '@dtos/users.dto';
 import { User } from '@entity/User.entity';
 import { IAuthRepository } from '@interfaces/Authrepo.interface';
 import { IUser } from '@interfaces/users.interface';
 import { Repository } from 'typeorm';
-import { UdremsData } from '../dataSource';
 
 class AuthService implements IAuthRepository {
   public async signup(createUserDto: CreateUserDto): Promise<IUser> {

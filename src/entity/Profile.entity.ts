@@ -30,7 +30,6 @@ export class Profile extends BaseEntity implements IProfile {
   bio: string;
 
   @OneToMany(type => Address, address => address.profile, { nullable: true })
-  @JoinColumn({ name: 'address', referencedColumnName: 'id' })
   address: Address[];
 
   @Column({ nullable: true })

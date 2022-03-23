@@ -2,7 +2,7 @@ import { AddressDocument } from '@/interfaces/shared.interface';
 import { BaseEntity } from '@entity/Base.entity';
 import { Profile } from '@entity/Profile.entity';
 import { IsString } from 'class-validator';
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, ManyToOne } from 'typeorm';
 import { Property } from './Property.entity';
 
 @Entity()
@@ -28,10 +28,8 @@ export class Address extends BaseEntity implements AddressDocument {
   country: string;
 
   @ManyToOne(type => Property, property => property.propertyAddress)
-  @JoinColumn()
   property: Address[];
 
   @ManyToOne(type => Profile, profile => profile.address)
-  @JoinColumn({ name: 'profile' })
   profile: Profile[];
 }

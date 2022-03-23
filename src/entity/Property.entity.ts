@@ -15,7 +15,7 @@ import { Address } from '@entity/Shared.entity';
 import { User } from '@entity/User.entity';
 import { IProperty } from '@interfaces/property.interface';
 import { IsDate, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinColumn, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Property extends BaseEntity implements IProperty {
@@ -31,13 +31,12 @@ export class Property extends BaseEntity implements IProperty {
   @IsString()
   propertyName: string;
 
-  @JoinColumn()
   @OneToMany(type => Address, address => address.property)
   propertyAddress: Address;
 
   @ManyToMany(type => User, user => user.property)
-  @JoinColumn({ name: 'user' })
-  user: User;
+  @JoinTable()
+  user: User[];
 
   @Column()
   @IsDate()

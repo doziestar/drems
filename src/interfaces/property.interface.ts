@@ -3,7 +3,7 @@ import { AddressDocument } from '@interfaces/shared.interface';
 import { IUser } from '@interfaces/users.interface';
 
 export interface Property {
-  user: IUser;
+  user: IUser[];
   // tenants: IUser;
   // propertyManager: IUser;
 }

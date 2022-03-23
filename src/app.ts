@@ -1,5 +1,6 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import { UdremsData } from '@/dataSource';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
@@ -13,7 +14,6 @@ import hpp from 'hpp';
 import morgan from 'morgan';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { createConnection } from 'typeorm';
 
 class App {
   public app: express.Application;
@@ -79,7 +79,7 @@ class App {
   }
 
   private initializeDatabase() {
-    createConnection()
+    UdremsData.initialize()
       .then(() => {
         logger.info('Database connection successful');
       })
