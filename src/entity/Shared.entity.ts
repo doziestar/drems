@@ -27,9 +27,9 @@ export class Address extends BaseEntity implements AddressDocument {
   @IsString()
   country: string;
 
-  @ManyToOne(type => Property, property => property.propertyAddress)
+  @ManyToOne(() => Property, property => property.propertyAddress)
   property: Address[];
 
-  @ManyToOne(type => Profile, profile => profile.address)
+  @ManyToOne(() => Profile, profile => profile.address)
   profile: Profile[];
 }

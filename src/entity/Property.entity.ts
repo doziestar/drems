@@ -12,7 +12,6 @@
  */
 
 import { Address } from '@entity/Shared.entity';
-import { User } from '@entity/User.entity';
 import { IProperty } from '@interfaces/property.interface';
 import { IsDate, IsString } from 'class-validator';
 import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
