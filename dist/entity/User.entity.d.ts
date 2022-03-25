@@ -5,8 +5,8 @@
  *
  */
 import { BaseEntity } from './Base.entity';
+import { Profile } from './Profile.entity';
 import { IUser } from '../interfaces/users.interface';
-import { Property } from './Property.entity';
 export declare class User extends BaseEntity implements IUser {
     email: string;
     userName: string;
@@ -16,7 +16,8 @@ export declare class User extends BaseEntity implements IUser {
     lastName: string;
     password: string;
     role: string;
-    property: Property[];
+    isVerified: boolean;
+    profile: Profile;
     hashPassword(): Promise<void>;
     createProfile(): Promise<void>;
     generateToken(): Promise<string>;

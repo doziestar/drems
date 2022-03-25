@@ -15,9 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Property = void 0;
 const tslib_1 = require("tslib");
 const Shared_entity_1 = require("./Shared.entity");
-const User_entity_1 = require("./User.entity");
 const class_validator_1 = require("class-validator");
 const typeorm_1 = require("typeorm");
+const Profile_entity_1 = require("./Profile.entity");
 let Property = class Property extends typeorm_1.BaseEntity {
 };
 (0, tslib_1.__decorate)([
@@ -36,15 +36,14 @@ let Property = class Property extends typeorm_1.BaseEntity {
     (0, tslib_1.__metadata)("design:type", String)
 ], Property.prototype, "propertyName", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.JoinColumn)(),
-    (0, typeorm_1.OneToMany)(type => Shared_entity_1.Address, address => address.property),
+    (0, typeorm_1.OneToMany)(() => Shared_entity_1.Address, address => address.property),
     (0, tslib_1.__metadata)("design:type", Shared_entity_1.Address)
 ], Property.prototype, "propertyAddress", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.ManyToMany)(type => User_entity_1.User, user => user.property),
-    (0, typeorm_1.JoinColumn)({ name: 'user' }),
-    (0, tslib_1.__metadata)("design:type", User_entity_1.User)
-], Property.prototype, "user", void 0);
+    (0, typeorm_1.ManyToMany)(() => Profile_entity_1.Profile, user => user.properties),
+    (0, typeorm_1.JoinTable)(),
+    (0, tslib_1.__metadata)("design:type", Array)
+], Property.prototype, "profile", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.Column)(),
     (0, class_validator_1.IsDate)(),

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
+const dataSource_1 = require("./dataSource");
 const error_middleware_1 = (0, tslib_1.__importDefault)(require("./middlewares/error.middleware"));
 const logger_1 = require("./utils/logger");
 const compression_1 = (0, tslib_1.__importDefault)(require("compression"));
@@ -14,7 +15,6 @@ const hpp_1 = (0, tslib_1.__importDefault)(require("hpp"));
 const morgan_1 = (0, tslib_1.__importDefault)(require("morgan"));
 const swagger_jsdoc_1 = (0, tslib_1.__importDefault)(require("swagger-jsdoc"));
 const swagger_ui_express_1 = (0, tslib_1.__importDefault)(require("swagger-ui-express"));
-const typeorm_1 = require("typeorm");
 class App {
     constructor(routes) {
         this.app = (0, express_1.default)();
@@ -67,7 +67,7 @@ class App {
         this.app.use('/api-docs', swagger_ui_express_1.default.serve, swagger_ui_express_1.default.setup(specs));
     }
     initializeDatabase() {
-        (0, typeorm_1.createConnection)()
+        dataSource_1.UdremsData.initialize()
             .then(() => {
             logger_1.logger.info('Database connection successful');
         })

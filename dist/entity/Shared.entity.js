@@ -35,13 +35,11 @@ let Address = class Address extends Base_entity_1.BaseEntity {
     (0, tslib_1.__metadata)("design:type", String)
 ], Address.prototype, "country", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.ManyToOne)(type => Property_entity_1.Property, property => property.propertyAddress),
-    (0, typeorm_1.JoinColumn)(),
+    (0, typeorm_1.ManyToOne)(() => Property_entity_1.Property, property => property.propertyAddress),
     (0, tslib_1.__metadata)("design:type", Array)
 ], Address.prototype, "property", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.ManyToOne)(type => Profile_entity_1.Profile, profile => profile.address),
-    (0, typeorm_1.JoinColumn)({ name: 'profile' }),
+    (0, typeorm_1.ManyToOne)(() => Profile_entity_1.Profile, profile => profile.address),
     (0, tslib_1.__metadata)("design:type", Array)
 ], Address.prototype, "profile", void 0);
 Address = (0, tslib_1.__decorate)([

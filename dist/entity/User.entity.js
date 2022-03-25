@@ -14,11 +14,7 @@ const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
 const class_validator_1 = require("class-validator");
 const jsonwebtoken_1 = (0, tslib_1.__importDefault)(require("jsonwebtoken"));
 const typeorm_1 = require("typeorm");
-const Property_entity_1 = require("./Property.entity");
 let User = class User extends Base_entity_1.BaseEntity {
-    // @OneToOne(type => Profile)
-    // @JoinColumn({ name: 'profile' })
-    // profile: Profile;
     // hash password before inserting into database
     async hashPassword() {
         const salt = await bcrypt_1.default.genSalt(10);
@@ -26,13 +22,13 @@ let User = class User extends Base_entity_1.BaseEntity {
     }
     // create profile for user on signup
     async createProfile() {
-        const profile = new Profile_entity_1.Profile();
+        const profile = await new Profile_entity_1.Profile();
         profile.user = this;
         // this.profile = profile;
     }
     // generate token for user
     async generateToken() {
-        const token = jsonwebtoken_1.default.sign({ id: this.id }, process.env.JWT_SECRET, {
+        const token = await jsonwebtoken_1.default.sign({ id: this.id }, process.env.JWT_SECRET, {
             expiresIn: process.env.JWT_EXPIRES_IN,
         });
         return token;
@@ -90,9 +86,15 @@ let User = class User extends Base_entity_1.BaseEntity {
     (0, tslib_1.__metadata)("design:type", String)
 ], User.prototype, "role", void 0);
 (0, tslib_1.__decorate)([
-    (0, typeorm_1.ManyToMany)(type => Property_entity_1.Property, property => property.user),
-    (0, tslib_1.__metadata)("design:type", Array)
-], User.prototype, "property", void 0);
+    (0, class_validator_1.IsBoolean)(),
+    (0, typeorm_1.Column)({ default: false }),
+    (0, tslib_1.__metadata)("design:type", Boolean)
+], User.prototype, "isVerified", void 0);
+(0, tslib_1.__decorate)([
+    (0, typeorm_1.OneToOne)(() => Profile_entity_1.Profile, profile => profile.user),
+    (0, typeorm_1.JoinColumn)({ name: 'profile' }),
+    (0, tslib_1.__metadata)("design:type", Profile_entity_1.Profile)
+], User.prototype, "profile", void 0);
 (0, tslib_1.__decorate)([
     (0, typeorm_1.BeforeInsert)(),
     (0, tslib_1.__metadata)("design:type", Function),

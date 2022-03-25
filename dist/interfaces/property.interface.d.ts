@@ -1,7 +1,7 @@
 import { AddressDocument } from './shared.interface';
-import { IUser } from './users.interface';
+import { IProfile } from './users.interface';
 export interface Property {
-    user: IUser;
+    profile: IProfile[];
 }
 export interface IProperty extends Property {
     id: string;

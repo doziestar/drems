@@ -11,15 +11,15 @@
  * @implements {IProperty}
  */
 import { Address } from './Shared.entity';
-import { User } from './User.entity';
 import { IProperty } from '../interfaces/property.interface';
 import { BaseEntity } from 'typeorm';
+import { Profile } from './Profile.entity';
 export declare class Property extends BaseEntity implements IProperty {
     id: string;
     propertyType: string;
     propertyName: string;
     propertyAddress: Address;
-    user: User;
+    profile: Profile[];
     createdAt: Date;
     updatedAt: Date;
 }

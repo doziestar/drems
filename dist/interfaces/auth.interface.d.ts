@@ -1,7 +1,7 @@
-import { Request } from 'express';
 import { IUser } from './users.interface';
+import { Request } from 'express';
 export interface DataStoredInToken {
-    id: number;
+    id: string;
 }
 export interface TokenData {
     token: string;

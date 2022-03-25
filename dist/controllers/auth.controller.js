@@ -1,16 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const Auth_repo_1 = (0, tslib_1.__importDefault)(require("../repositories/Auth.repo"));
+const auth_service_1 = (0, tslib_1.__importDefault)(require("../services/auth.service"));
 class AuthController {
     constructor() {
-        this.authService = new Auth_repo_1.default();
+        this.authService = new auth_service_1.default();
         this.signUp = async (req, res, next) => {
             try {
                 const userData = req.body;
-                if (userData.password !== userData.confirmPassword) {
-                    throw new Error('Password does not match');
-                }
+                // console.log(userData);
+                // if (userData.password !== userData.confirmPassword) {
+                //   throw new Error('Password does not match');
+                // }
                 const signUpUserData = await this.authService.signup(userData);
                 res.status(201).json({ data: signUpUserData, message: 'signup' });
             }
@@ -21,11 +22,11 @@ class AuthController {
         this.logIn = async (req, res, next) => {
             try {
                 const userData = req.body;
-                const { token, user } = await this.authService.login(userData);
+                const { token, user, expiresIn } = await this.authService.login(userData);
                 // const { cookie, findUser } = await this.authService.login(userData);
                 // res.setHeader('Set-Cookie', [cookie]);
                 res.setHeader('Set-Cookie', [token]);
-                res.status(200).json({ data: user, message: 'login', token: token });
+                res.status(200).json({ data: user, message: 'login', token: token, expiresIn: expiresIn });
             }
             catch (error) {
                 next(error);

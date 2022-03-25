@@ -1,7 +1,7 @@
-import AuthRepository from '../repositories/Auth.repo';
+import AuthService from '../services/auth.service';
 import { NextFunction, Request, Response } from 'express';
 declare class AuthController {
-    authService: AuthRepository;
+    authService: AuthService;
     signUp: (req: Request, res: Response, next: NextFunction) => Promise<void>;
     logIn: (req: Request, res: Response, next: NextFunction) => Promise<void>;
 }
