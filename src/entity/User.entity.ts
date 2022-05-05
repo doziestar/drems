@@ -4,9 +4,10 @@
  * @author Chidozie C. Okafor
  *
  */
+import { IProperty } from '@/interfaces/property.interface';
 import { BaseEntity } from '@entity/Base.entity';
 import { Profile } from '@entity/Profile.entity';
-import { IUser } from '@interfaces/users.interface';
+import { IProfile, IUser } from '@interfaces/users.interface';
 import bcrypt from 'bcrypt';
 import { IsBoolean, IsEmail, IsPhoneNumber, IsString } from 'class-validator';
 import jwt from 'jsonwebtoken';
@@ -14,6 +15,8 @@ import { BeforeInsert, Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity implements IUser {
+  profile: IProfile;
+  property: IProperty[];
   @Column({ unique: true })
   @IsEmail()
   email: string;
@@ -52,7 +55,7 @@ export class User extends BaseEntity implements IUser {
 
   @OneToOne(() => Profile, profile => profile.user)
   @JoinColumn({ name: 'profile' })
-  profile: Profile;
+  properties: Profile;
 
   // hash password before inserting into database
   @BeforeInsert()

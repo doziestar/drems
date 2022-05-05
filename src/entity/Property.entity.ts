@@ -14,8 +14,9 @@
 import { Address } from '@entity/Shared.entity';
 import { IProperty } from '@interfaces/property.interface';
 import { IsDate, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, JoinTable, ManyToMany, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Profile } from './Profile.entity';
+import { User } from './User.entity';
 
 @Entity()
 export class Property extends BaseEntity implements IProperty {
@@ -36,7 +37,7 @@ export class Property extends BaseEntity implements IProperty {
 
   @ManyToMany(() => Profile, user => user.properties)
   @JoinTable()
-  profile: Profile[];
+  tenants: User[];
 
   @Column()
   @IsDate()
@@ -45,4 +46,7 @@ export class Property extends BaseEntity implements IProperty {
   @Column()
   @IsDate()
   updatedAt: Date;
+
+  @OneToOne(() => User, user => user.property)
+  propertyManager: User;
 }

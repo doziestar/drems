@@ -21,6 +21,7 @@ export interface IUser {
   profile: IProfile;
   isVerified?: boolean;
   role: string;
+  property: IProperty[];
 
   // create profile for user on signup
   createProfile(): Promise<void>;

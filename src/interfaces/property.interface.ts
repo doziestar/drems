@@ -1,10 +1,10 @@
 // interface for property
 import { AddressDocument } from '@interfaces/shared.interface';
-import { IProfile } from '@interfaces/users.interface';
+import { IUser } from '@interfaces/users.interface';
 
 export interface Property {
-  profile: IProfile[];
-  // tenants: IUser;
+  // ten: IProfile[];
+  tenants: IUser[];
   // propertyManager: IUser;
 }
 
@@ -15,6 +15,7 @@ export interface IProperty extends Property {
   propertyAddress: AddressDocument;
   createdAt: Date;
   updatedAt: Date;
+  propertyManager: IUser;
 }
 
 export interface IPropertyCreate {
