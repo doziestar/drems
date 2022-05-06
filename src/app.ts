@@ -11,9 +11,9 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
+import { Sequelize } from 'sequelize';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { createConnection } from 'typeorm';
 
 class App {
   public app: express.Application;
@@ -78,14 +78,15 @@ class App {
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
-  private initializeDatabase() {
-    createConnection()
-      .then(() => {
-        logger.info('Connected to database');
-      })
-      .catch(error => {
-        logger.error('Database connection error: ', error);
-      });
+  private async initializeDatabase() {
+    const sequelize = new Sequelize('postgres://postgres:918273645dozie@localhost:5432/drems');
+    try {
+      await sequelize.authenticate();
+      throw new Error('Unable to connect to the database: ' + sequelize.config.database);
+    } catch (error) {
+      throw new Error('Unable to connect to the database: ' + sequelize.config.database);
+      // console.error('Unable to connect to the database:', error);
+    }
   }
 
   private initializeErrorHandling() {

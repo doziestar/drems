@@ -18,7 +18,6 @@
     "typeorm:migration:undo": "typeorm migration:undo",
     "typeorm:migration:redo": "typeorm migration:redo",
     "typeorm:migration:generate": "typeorm migration:generate"
-
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
@@ -38,8 +37,10 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.2",
     "morgan": "^1.10.0",
-    "pg": "^8.7.1",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
     "pm2": "^5.1.0",
+    "sequelize": "^6.19.0",
     "swagger-jsdoc": "^6.0.0",
     "swagger-ui-express": "^4.1.6",
     "ts-jest": "^27.0.3",
