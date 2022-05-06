@@ -79,12 +79,13 @@ class App {
   }
 
   private async initializeDatabase() {
+    console.log('Initializing database...');
     const sequelize = new Sequelize('postgres://postgres:918273645dozie@localhost:5432/drems');
     try {
       await sequelize.authenticate();
-      throw new Error('Unable to connect to the database: ' + sequelize.config.database);
+      console.log('Database connected successfully.');
     } catch (error) {
-      throw new Error('Unable to connect to the database: ' + sequelize.config.database);
+      throw new Error('Unable to connect to the database: ' + sequelize.config.database + '\n' + error);
       // console.error('Unable to connect to the database:', error);
     }
   }

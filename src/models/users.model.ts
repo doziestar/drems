@@ -1,11 +1,54 @@
-import { User } from '@interfaces/users.interface';
+import { DataTypes, Sequelize } from 'sequelize/types';
 
-// password: q1w2e3r4
-const userModel: User[] = [
-  { id: 1, email: 'lim@gmail.com', password: '$2b$10$hmrwtGwC.QlfWt6YWaT3S.FP9CarS3.V9n3Qr.d9y2ovcan0oxs56' },
-  { id: 2, email: 'kim@gmail.com', password: '$2b$10$hmrwtGwC.QlfWt6YWaT3S.FP9CarS3.V9n3Qr.d9y2ovcan0oxs56' },
-  { id: 3, email: 'park@gmail.com', password: '$2b$10$hmrwtGwC.QlfWt6YWaT3S.FP9CarS3.V9n3Qr.d9y2ovcan0oxs56' },
-  { id: 4, email: 'choi@gmail.com', password: '$2b$10$hmrwtGwC.QlfWt6YWaT3S.FP9CarS3.V9n3Qr.d9y2ovcan0oxs56' },
-];
-
-export default userModel;
+const sequelize = new Sequelize();
+const User = sequelize.define(
+  'User',
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    // createdAt: {
+    //   type: DataTypes.DATE,
+    //   allowNull: false,
+    // },
+    // updatedAt: {
+    //   type: DataTypes.DATE,
+    //   allowNull: false,
+    // },
+    deletedAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
+  },
+  {
+    timestamps: true,
+    paranoid: true,
+    freezeTableName: true,
+    tableName: 'users',
+    hooks: {
+      beforeCreate: user => {
+        user.createdAt = new Date();
+        user.updatedAt = new Date();
+      },
+      beforeUpdate: user => {
+        user.updatedAt = new Date();
+      },
+    },
+  },
+);

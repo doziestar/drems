@@ -4,20 +4,15 @@
   "description": "TypeScript + Express API Server",
   "author": "Chidozie C. Okafor",
   "license": "ISC",
-  "type": "module",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
+    "start": "npm run build && cross-env NODE_ENV=production node src/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc && npx tsc-alias",
     "test": "jest --forceExit --detectOpenHandles",
     "lint": "eslint --ignore-path .gitignore --ext .ts src/",
     "lint:fix": "npm run lint -- --fix",
     "deploy:prod": "npm run build && pm2 start ecosystem.config.js --only prod",
-    "deploy:dev": "pm2 start ecosystem.config.js --only dev",
-    "typeorm:migration": "typeorm migration:run",
-    "typeorm:migration:undo": "typeorm migration:undo",
-    "typeorm:migration:redo": "typeorm migration:redo",
-    "typeorm:migration:generate": "typeorm migration:generate"
+    "deploy:dev": "pm2 start ecosystem.config.js --only dev"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",
