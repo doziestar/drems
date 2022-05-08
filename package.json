@@ -4,8 +4,9 @@
   "description": "TypeScript + Express API Server",
   "author": "Chidozie C. Okafor",
   "license": "ISC",
+  "type": "module",
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node src/server.js",
+    "start": "npm run build && cross-env NODE_ENV=production node dist/server.js",
     "dev": "cross-env NODE_ENV=development nodemon",
     "build": "tsc && npx tsc-alias",
     "test": "jest --forceExit --detectOpenHandles",

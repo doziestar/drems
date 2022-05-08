@@ -1,4 +1,4 @@
-import { PropertyManager } from '@interfaces/managers.interface';
+import { PropertyManager } from '../interfaces/managers.interface';
 declare class PropertyManagerService {
     getPropertyManagers(): Promise<PropertyManager[]>;
     getPropertyManagerById(propertyManagerId: string): Promise<PropertyManager>;

@@ -18,17 +18,17 @@ class AuthController {
     }
   };
 
-  public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-    try {
-      const userData: CreateUserDto = req.body;
-      const { cookie, findUser } = await this.authService.login(userData);
+  // public logIn = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  //   try {
+  //     const userData: CreateUserDto = req.body;
+  //     const { cookie, findUser } = await this.authService.login(userData);
 
-      res.setHeader('Set-Cookie', [cookie]);
-      res.status(200).json({ data: findUser, message: 'login' });
-    } catch (error) {
-      next(error);
-    }
-  };
+  //     res.setHeader('Set-Cookie', [cookie]);
+  //     res.status(200).json({ data: findUser, message: 'login' });
+  //   } catch (error) {
+  //     next(error);
+  //   }
+  // };
 
   public logOut = async (req: RequestWithUser, res: Response, next: NextFunction): Promise<void> => {
     try {

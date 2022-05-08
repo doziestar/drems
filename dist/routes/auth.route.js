@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+const auth_controller_1 = (0, tslib_1.__importDefault)(require("../controllers/auth.controller"));
+const users_dto_1 = require("../dtos/users.dto");
+const auth_middleware_1 = (0, tslib_1.__importDefault)(require("../middlewares/auth.middleware"));
+const validation_middleware_1 = (0, tslib_1.__importDefault)(require("../middlewares/validation.middleware"));
 const express_1 = require("express");
-const auth_controller_1 = (0, tslib_1.__importDefault)(require("@controllers/auth.controller"));
-const users_dto_1 = require("@dtos/users.dto");
-const auth_middleware_1 = (0, tslib_1.__importDefault)(require("@middlewares/auth.middleware"));
-const validation_middleware_1 = (0, tslib_1.__importDefault)(require("@middlewares/validation.middleware"));
 class AuthRoute {
     constructor() {
         this.path = '/';
@@ -15,7 +15,7 @@ class AuthRoute {
     }
     initializeRoutes() {
         this.router.post(`${this.path}signup`, (0, validation_middleware_1.default)(users_dto_1.CreateUserDto, 'body'), this.authController.signUp);
-        this.router.post(`${this.path}login`, (0, validation_middleware_1.default)(users_dto_1.CreateUserDto, 'body'), this.authController.logIn);
+        // this.router.post(`${this.path}login`, validationMiddleware(CreateUserDto, 'body'), this.authController.logIn);
         this.router.post(`${this.path}logout`, auth_middleware_1.default, this.authController.logOut);
     }
 }

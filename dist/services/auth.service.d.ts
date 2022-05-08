@@ -1,15 +1,12 @@
-import { CreateUserDto } from '@dtos/users.dto';
-import { TokenData } from '@interfaces/auth.interface';
-import { User } from '@interfaces/users.interface';
+import { CreateUserDto } from '../dtos/users.dto';
+import { TokenData } from '../interfaces/auth.interface';
+import { UserInput, UserResponse } from '../interfaces/users.interface';
+import userModel from '../models/User.model';
 declare class AuthService {
-    users: User[];
-    signup(userData: CreateUserDto): Promise<User>;
-    login(userData: CreateUserDto): Promise<{
-        cookie: string;
-        findUser: User;
-    }>;
-    logout(userData: User): Promise<User>;
-    createToken(user: User): TokenData;
+    users: typeof userModel;
+    signup(userData: CreateUserDto): Promise<UserResponse>;
+    logout(userData: UserInput): Promise<UserResponse>;
+    createToken(user: UserInput): TokenData;
     createCookie(tokenData: TokenData): string;
 }
 export default AuthService;

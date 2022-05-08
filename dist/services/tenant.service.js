@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// import { CreateTenantDto } from "@/dtos/tenant.dto";
-const HttpException_1 = require("@/exceptions/HttpException");
-const tenant_models_1 = require("@/models/tenant.models");
+// import { CreateTenantDto } from "../dtos/tenant.dto";
+const HttpException_1 = require("../exceptions/HttpException");
+const tenant_models_1 = require("../models/tenant.models");
 class TenantService {
     constructor() {
         this.tenants = tenant_models_1.TenantModel;

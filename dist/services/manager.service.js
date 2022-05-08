@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 // services for property manager
 const http_exception_1 = require("@exceptions/http.exception");
-const managers_models_1 = require("@models/managers.models");
+const managers_models_1 = require("../models/managers.models");
 class PropertyManagerService {
     async getPropertyManagers() {
         const propertyManagers = await managers_models_1.PropertyManager.find();

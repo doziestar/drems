@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const manager_service_1 = require("@services/manager.service");
+const manager_service_1 = require("../services/manager.service");
 class PropertyManagerController {
     constructor() {
         this.propertyManager = new manager_service_1.PropertyManagerService();
