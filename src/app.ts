@@ -25,10 +25,15 @@ class App {
     this.port = process.env.PORT || 3000;
     this.env = process.env.NODE_ENV || 'development';
 
+    console.log('Initializing app...');
     this.initializeMiddlewares();
+    console.log('Initializing routes...');
     this.initializeRoutes(routes);
+    console.log('Initializing swagger...');
     this.initializeSwagger();
+    console.log('Initializing error handling...');
     this.initializeErrorHandling();
+    console.log('Initializing database...');
     this.initializeDatabase();
   }
 

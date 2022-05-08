@@ -1,8 +1,8 @@
+import { UserAttributes } from '@interfaces/users.interface';
 import { Request } from 'express';
-import { User } from '@interfaces/users.interface';
 
 export interface DataStoredInToken {
-  id: number;
+  id: string;
 }
 
 export interface TokenData {
@@ -11,5 +11,5 @@ export interface TokenData {
 }
 
 export interface RequestWithUser extends Request {
-  user: User;
+  user: UserAttributes;
 }

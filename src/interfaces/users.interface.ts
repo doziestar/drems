@@ -1,27 +1,33 @@
-export interface IUserInput {
+import { Optional } from 'sequelize';
+
+export interface UserAttributes {
   email: string;
   firstName: string;
   lastName: string;
-  password: string;
-}
-
-export interface IUser extends IUserInput {
-  id: number;
+  id: string;
   avatar: string;
   phoneNumber: string;
   createdAt: Date;
   updatedAt: Date;
+  password: string;
 }
 
 export interface IUserResponse {
-  user: IUser;
+  user: UserAttributes;
 }
 
 export interface IUserProfile {
-  id: number;
+  id: StringConstructor;
   bio: string;
   address: string;
   // properties: Property[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface UserInput extends Optional<UserAttributes, 'id' | 'createdAt' | 'updatedAt' | 'avatar' | 'phoneNumber'> {
+  email: string;
+}
+export interface UserResponse extends Required<UserAttributes> {
+  id: string;
 }
