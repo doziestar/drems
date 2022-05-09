@@ -1,6 +1,5 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
-import { UdremsData } from '@/dataSource';
 import { Routes } from '@interfaces/routes.interface';
 import errorMiddleware from '@middlewares/error.middleware';
 import { logger, stream } from '@utils/logger';
@@ -12,6 +11,7 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
+import { Sequelize } from 'sequelize';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 
@@ -79,12 +79,14 @@ class App {
   }
 
   private initializeDatabase() {
-    UdremsData.initialize()
+    const sequelize = new Sequelize(config.get('db'));
+    sequelize
+      .authenticate()
       .then(() => {
-        logger.info('Database connection successful');
+        logger.info('🚀 Database connected');
       })
-      .catch(error => {
-        logger.error('Database connection error: ' + error);
+      .catch(err => {
+        logger.error('🚨 Database connection error: ' + err);
       });
   }
 
