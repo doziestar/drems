@@ -10,6 +10,8 @@ export interface IUser {
   password: string;
   isVerified?: boolean;
   role: string;
+  username?: string;
+  fullName?: string;
 
   // hash password before inserting into database
   hashPassword(): Promise<void>;

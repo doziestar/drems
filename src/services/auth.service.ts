@@ -13,18 +13,23 @@ class AuthService implements IAuth {
   private users = User;
   public async signup(createUserDto: CreateUserDto): Promise<IUser> {
     const userExist: IUser = await this.users.findOne({
-      where: { email: createUserDto.email, username: createUserDto.username, phoneNumber: createUserDto.phoneNumber },
+      where: { email: createUserDto.email },
     });
     if (userExist) throw new HttpException(409, 'user already exist');
 
-    // const userExist2: IUser = await this.users.findOne({ where: { userName: createUserDto.username } });
-    // if (userExist2) throw new HttpException(409, 'username already exist');
+    const userExist2: IUser = await this.users.findOne({ where: { username: createUserDto.username } });
+    if (userExist2) throw new HttpException(409, 'username already exist');
 
-    // const userExist3: IUser = await this.users.findOne({ where: { phoneNumber: createUserDto.phoneNumber } });
-    // if (userExist3) throw new HttpException(409, 'Phone number already exist');
+    const userExist3: IUser = await this.users.findOne({ where: { phoneNumber: createUserDto.phoneNumber } });
+    if (userExist3) throw new HttpException(409, 'Phone number already exist');
 
-    // const user = await this.users.create(createUserDto);
-    return userExist;
+    const user: IUser = await this.users.create<User>({
+      email: createUserDto.email,
+      phoneNumber: createUserDto.phoneNumber,
+      username: createUserDto.username,
+      password: createUserDto.password,
+    });
+    return user;
   }
 
   public async login(loginUserDto: LoginUserDto): Promise<{ user: IUser; token: string; expiresIn: Number }> {

@@ -33,7 +33,7 @@ export class User extends Model implements IUser {
   }
   async createProfile(): Promise<void> {
     try {
-      await sequelize.models.Profile.create({
+      await Profile.create({
         userId: this.id,
       });
     } catch (error) {
@@ -43,6 +43,7 @@ export class User extends Model implements IUser {
   public id: string;
   public email: string;
   public phoneNumber: string;
+  public username: string;
   public isActive: boolean;
   public firstName: string;
   public lastName: string;
@@ -63,6 +64,11 @@ User.init(
       allowNull: false,
       unique: true,
     },
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -74,11 +80,11 @@ User.init(
     },
     firstName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     lastName: {
       type: DataTypes.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     password: {
       type: DataTypes.STRING,
@@ -108,7 +114,7 @@ User.init(
     paranoid: true,
     hooks: {
       beforeCreate: (user: User) => user.hashPassword(),
-      // beforeUpdate: (user: User) => user.hashPassword(),
+      // create profile
       afterCreate: (user: User) => user.createProfile(),
     },
   },

@@ -65,9 +65,9 @@ class App {
     const options = {
       swaggerDefinition: {
         info: {
-          title: 'Udrems Backend',
+          title: 'Briza API Demo',
           version: '1.0.0',
-          description: 'Udrems api backend',
+          description: 'Creating Briza Insurance API For Developers',
         },
       },
       apis: ['swagger.yaml'],

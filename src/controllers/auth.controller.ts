@@ -1,7 +1,7 @@
+import { NextFunction, Request, Response } from 'express';
 import { CreateUserDto } from '../dtos/users.dto';
 import { IUser } from '../interfaces/users.interface';
 import AuthService from '../services/auth.service';
-import { NextFunction, Request, Response } from 'express';
 
 class AuthController {
   public authService = new AuthService();
@@ -10,9 +10,9 @@ class AuthController {
     try {
       const userData: CreateUserDto = req.body;
       // console.log(userData);
-      // if (userData.password !== userData.confirmPassword) {
-      //   throw new Error('Password does not match');
-      // }
+      if (userData.password !== userData.confirmPassword) {
+        throw new Error('Password does not match');
+      }
       const signUpUserData: IUser = await this.authService.signup(userData);
 
       res.status(201).json({ data: signUpUserData, message: 'signup' });
