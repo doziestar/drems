@@ -44,7 +44,7 @@ Profile.init(
     sequelize: sequelize,
     modelName: 'profile',
     tableName: 'profiles',
-    timestamps: true,
-    paranoid: true,
+    timestamps: false,
+    paranoid: false,
   },
 );
