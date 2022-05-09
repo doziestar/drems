@@ -1,18 +1,44 @@
 import { IUser } from '@/interfaces/users.interface';
-import { DataTypes, Model, Sequelize } from 'sequelize';
+import sequelize from '@/utils/db';
+import { Profile } from '@models/Profile.model';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { DataTypes, Model } from 'sequelize';
 
 export class User extends Model implements IUser {
-  createProfile(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  hashPassword(): Promise<void> {
-    throw new Error('Method not implemented.');
+  async hashPassword(): Promise<void> {
+    const salt = await bcrypt.genSalt(10);
+    try {
+      this.password = await bcrypt.hash(this.password, salt);
+    } catch (error) {
+      throw new Error(error);
+    }
   }
   comparePassword(password: string): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return bcrypt.compare(password, this.password);
   }
-  generateToken(): Promise<string> {
-    throw new Error('Method not implemented.');
+  async generateToken(): Promise<string> {
+    try {
+      const payload = {
+        id: this.id,
+        email: this.email,
+        phoneNumber: this.phoneNumber,
+        isActive: this.isActive,
+      };
+      const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+      return token;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+  async createProfile(): Promise<void> {
+    try {
+      await sequelize.models.Profile.create({
+        userId: this.id,
+      });
+    } catch (error) {
+      throw new Error(error);
+    }
   }
   public id: string;
   public email: string;
@@ -67,14 +93,33 @@ User.init(
       allowNull: false,
       defaultValue: 'user',
     },
+    fullName: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return `${this.firstName} ${this.lastName}`;
+      },
+    },
   },
   {
-    sequelize: new Sequelize(),
+    sequelize: sequelize,
     modelName: 'user',
     tableName: 'users',
-    timestamps: false,
+    timestamps: true,
+    paranoid: true,
     hooks: {
       beforeCreate: (user: User) => user.hashPassword(),
+      // beforeUpdate: (user: User) => user.hashPassword(),
+      afterCreate: (user: User) => user.createProfile(),
     },
   },
 );
+
+User.hasOne(Profile, {
+  foreignKey: 'userId',
+  as: 'profile',
+});
+
+Profile.belongsTo(User, {
+  foreignKey: 'userId',
+  as: 'user',
+});

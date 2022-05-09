@@ -11,9 +11,6 @@ export interface IUser {
   isVerified?: boolean;
   role: string;
 
-  // create profile for user on signup
-  createProfile(): Promise<void>;
-
   // hash password before inserting into database
   hashPassword(): Promise<void>;
 
@@ -22,6 +19,9 @@ export interface IUser {
 
   // generate token
   generateToken(): Promise<string>;
+
+  // create Profile
+  createProfile(): Promise<void>;
 }
 
 export interface UserInput {
@@ -29,4 +29,13 @@ export interface UserInput {
   username?: string;
   phoneNumber?: string;
   password: string;
+}
+
+export interface IProfile {
+  userId: string;
+  bio?: string;
+  website?: string;
+  location?: string;
+  birthday?: string;
+  avatar?: string;
 }

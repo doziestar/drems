@@ -1,5 +1,9 @@
 process.env['NODE_CONFIG_DIR'] = __dirname + '/configs';
 
+import { Routes } from '@interfaces/routes.interface';
+import errorMiddleware from '@middlewares/error.middleware';
+import sequelize from '@utils/db';
+import { logger, stream } from '@utils/logger';
 import compression from 'compression';
 import config from 'config';
 import cookieParser from 'cookie-parser';
@@ -8,12 +12,8 @@ import express from 'express';
 import helmet from 'helmet';
 import hpp from 'hpp';
 import morgan from 'morgan';
-import { Sequelize } from 'sequelize';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { Routes } from './interfaces/routes.interface';
-import errorMiddleware from './middlewares/error.middleware';
-import { logger, stream } from './utils/logger';
 
 class App {
   public app: express.Application;
@@ -24,9 +24,7 @@ class App {
     this.app = express();
     this.port = process.env.PORT || 3000;
     this.env = process.env.NODE_ENV || 'development';
-    console.log(this.env);
     this.initializeMiddlewares();
-    console.log('Middlewares initialized');
     this.initializeRoutes(routes);
     this.initializeSwagger();
     this.initializeErrorHandling();
@@ -79,8 +77,7 @@ class App {
     this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
   }
 
-  private initializeDatabase() {
-    const sequelize = new Sequelize(config.get('db'), { dialect: 'postgres' });
+  private async initializeDatabase() {
     sequelize
       .authenticate()
       .then(() => {
@@ -89,6 +86,8 @@ class App {
       .catch(err => {
         logger.error('🚨 Database connection error: ' + err);
       });
+    const isDev = this.env === 'development';
+    await sequelize.sync({ alter: isDev });
   }
 
   private initializeErrorHandling() {
