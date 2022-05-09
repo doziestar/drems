@@ -8,13 +8,13 @@ export class CreateUserDto {
   public phoneNumber: string;
 
   @IsString()
-  public userName: string;
+  public username: string;
 
-  @IsString()
-  public firstName?: string;
+  // @IsString()
+  // public firstName?: string;
 
-  @IsString()
-  public lastName?: string;
+  // @IsString()
+  // public lastName?: string;
 
   @IsString()
   public password: string;

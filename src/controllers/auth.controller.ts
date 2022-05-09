@@ -1,6 +1,6 @@
-import { CreateUserDto } from '@dtos/users.dto';
-import { IUser } from '@interfaces/users.interface';
-import AuthService from '@services/auth.service';
+import { CreateUserDto } from '../dtos/users.dto';
+import { IUser } from '../interfaces/users.interface';
+import AuthService from '../services/auth.service';
 import { NextFunction, Request, Response } from 'express';
 
 class AuthController {
