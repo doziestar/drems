@@ -16,9 +16,9 @@ if (env === 'production') {
   // });
   sequelize = new Sequelize(config.get('database.url'), {
     dialect: 'postgres',
-    // dialectOptions: {
-    //   ssl: true,
-    // },
+    dialectOptions: {
+      ssl: true,
+    },
   });
 } else {
   sequelize = new Sequelize(config.get('db'), { dialect: 'postgres' });
