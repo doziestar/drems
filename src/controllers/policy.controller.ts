@@ -1,12 +1,12 @@
 import { PolicyService } from '@/services/policy.service';
 import { NextFunction, Request, Response } from 'express';
-import { Delete, Get, Post, Put, Route } from 'tsoa';
+// import { Delete, Get, Post, Put, Route } from 'tsoa';
 
-@Route('/api/v1/policies')
+// @Route('/api/v1/policies')
 export class PolicyController {
   public policyService = new PolicyService();
 
-  @Get()
+  // @Get()
   public index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const policies = await this.policyService.index();
@@ -17,7 +17,7 @@ export class PolicyController {
     }
   };
 
-  @Get('{id}')
+  // @Get('{id}')
   public show = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const policy = await this.policyService.show(req.params.id);
@@ -28,7 +28,7 @@ export class PolicyController {
     }
   };
 
-  @Post()
+  // @Post()
   public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const policy = await this.policyService.create(req.body);
@@ -39,7 +39,7 @@ export class PolicyController {
     }
   };
 
-  @Put('{id}')
+  // @Put('{id}')
   public update = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const policy = await this.policyService.update(req.params.id, req.body);
@@ -50,7 +50,7 @@ export class PolicyController {
     }
   };
 
-  @Delete('{id}')
+  // @Delete('{id}')
   public destroy = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
       const policy = await this.policyService.destroy(req.params.id);
