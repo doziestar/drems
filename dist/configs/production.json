@@ -8,5 +8,6 @@
     "cors": {
         "origin": "your.domain.com",
         "credentials": true
-    }
+    },
+    "db": "postgres://postgres:918273645dozie@localhost:5432/drems"
 }

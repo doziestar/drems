@@ -10,3 +10,9 @@ validateEnv();
 const app = new App([new IndexRoute(), new AuthRoute()]);
 
 app.listen();
+
+/**
+Todo:
+- Write index test case
+- push to heroku
+ */

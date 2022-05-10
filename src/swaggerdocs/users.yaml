@@ -105,11 +105,30 @@ paths:
 
 # definitions
 definitions:
+  profile:
+    type: object
+    required:
+      - userid
+      - bio
+    properties:
+      userid:
+        type: integer
+      bio:
+        type: string
+      website:
+        type: string
+      location:
+        type: string
+      birthdate:
+        type: string
+
   users:
     type: object
     required:
         - email
         - password
+        - username
+        - phoneNumber
     properties:
       id:
         type: integer
@@ -120,7 +139,45 @@ definitions:
       password:
         type: string
         description: user Password
+      username:
+        type: string
+        description: user Username
+      phoneNumber:
+        type: string
+        description: user PhoneNumber
+      createdAt:
+        type: string
+        description: user CreatedAt
+      updatedAt:
+        type: string
+        description: user UpdatedAt
+      deletedAt:
+        type: string
+        description: user DeletedAt
+      isActive:
+        type: boolean
+      isVerified:
+        type: boolean
+      roles:
+        type: array
+      firstName:
+        type: string
+        description: user FirstName
+      lastName:
+        type: string
+        description: user LastName
+      fullName:
+        type: string
+        description: user FullName
+      profile:
+        $ref: '#/definitions/profile'
+        description: user Profile
 
 schemes:
  - https
  - http
+
+# {
+#   "email": "dozie@gmail.com",
+#   "password": "918273645dozie"
+# }

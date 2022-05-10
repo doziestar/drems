@@ -1,0 +1,23 @@
+tags:
+  - name: Health Check
+    description: Health Check
+
+paths:
+  /api/v1/:
+    get:
+      tags:
+      - Health Check
+      summary: Health Check
+      responses:
+        200:
+          description: 'OK'
+        500:
+          description: 'Server Error'
+
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: "Authorization using Bearer Token"

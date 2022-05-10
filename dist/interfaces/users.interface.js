@@ -1,2 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+// import { TransactionDocument } from './account.interface';
+export {};

@@ -1,19 +1,33 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const auth_service_1 = (0, tslib_1.__importDefault)(require("../services/auth.service"));
+import _ from 'lodash';
+import AuthService from '../services/auth.service';
 class AuthController {
     constructor() {
-        this.authService = new auth_service_1.default();
+        this.authService = new AuthService();
         this.signUp = async (req, res, next) => {
             try {
                 const userData = req.body;
                 // console.log(userData);
-                // if (userData.password !== userData.confirmPassword) {
-                //   throw new Error('Password does not match');
-                // }
-                const signUpUserData = await this.authService.signup(userData);
-                res.status(201).json({ data: signUpUserData, message: 'signup' });
+                if (userData.password !== userData.confirmPassword) {
+                    throw new Error('Password does not match');
+                }
+                const { user, token, expiresIn } = await this.authService.signup(userData);
+                const response = _.pick(user, [
+                    'id',
+                    'username',
+                    'email',
+                    'phoneNumber',
+                    'firstname',
+                    'lastname',
+                    'fullname',
+                    'createdAt',
+                    'updatedAt',
+                    'deletedAt',
+                    'profile',
+                    'isActive',
+                    'isVerified',
+                    'role',
+                ]);
+                res.status(201).json({ data: response, token: token, expiresIn: expiresIn, message: 'signup successful' });
             }
             catch (error) {
                 next(error);
@@ -23,10 +37,24 @@ class AuthController {
             try {
                 const userData = req.body;
                 const { token, user, expiresIn } = await this.authService.login(userData);
-                // const { cookie, findUser } = await this.authService.login(userData);
-                // res.setHeader('Set-Cookie', [cookie]);
-                res.setHeader('Set-Cookie', [token]);
-                res.status(200).json({ data: user, message: 'login', token: token, expiresIn: expiresIn });
+                const response = _.pick(user, [
+                    'id',
+                    'username',
+                    'email',
+                    'phoneNumber',
+                    'firstname',
+                    'lastname',
+                    'fullname',
+                    'createdAt',
+                    'updatedAt',
+                    'deletedAt',
+                    'profile',
+                    'isActive',
+                    'isVerified',
+                    'role',
+                ]);
+                res.setHeader('X-Auth', [token]);
+                res.status(200).json({ data: response, message: 'login', token: token, expiresIn: expiresIn });
             }
             catch (error) {
                 next(error);
@@ -44,4 +72,4 @@ class AuthController {
         // };
     }
 }
-exports.default = AuthController;
+export default AuthController;

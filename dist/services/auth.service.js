@@ -1,39 +1,50 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * @author Chidozie C. Okafor
  * @description This is authentication repository for user authentication
  * @param {type} type
  */
-const dataSource_1 = require("../dataSource");
-const HttpException_1 = require("../exceptions/HttpException");
-const User_entity_1 = require("../entity/User.entity");
+import { Profile } from '../models/Profile.model';
+import { HttpException } from '../exceptions/HttpException';
+import { User } from '../models/User.model';
 class AuthService {
+    constructor() {
+        this.users = User;
+    }
     async signup(createUserDto) {
-        const userRepository = dataSource_1.UdremsData.getRepository(User_entity_1.User);
-        const userExist = await userRepository.findOne({ where: { email: createUserDto.email } });
+        const userExist = await this.users.findOne({
+            where: { email: createUserDto.email },
+        });
         if (userExist)
-            throw new HttpException_1.HttpException(409, 'user already exist');
-        const userExist2 = await userRepository.findOne({ where: { userName: createUserDto.userName } });
+            throw new HttpException(409, 'user already exist');
+        const userExist2 = await this.users.findOne({ where: { username: createUserDto.username } });
         if (userExist2)
-            throw new HttpException_1.HttpException(409, 'username already exist');
-        const userExist3 = await userRepository.findOne({ where: { phoneNumber: createUserDto.phoneNumber } });
+            throw new HttpException(409, 'username already exist');
+        const userExist3 = await this.users.findOne({ where: { phoneNumber: createUserDto.phoneNumber } });
         if (userExist3)
-            throw new HttpException_1.HttpException(409, 'Phone number already exist');
-        const user = await userRepository.create(createUserDto);
-        const savedUser = await userRepository.save(user);
-        return savedUser;
+            throw new HttpException(409, 'Phone number already exist');
+        const data = await this.users.create({
+            email: createUserDto.email,
+            phoneNumber: createUserDto.phoneNumber,
+            username: createUserDto.username,
+            password: createUserDto.password,
+        });
+        const user = await this.users.findOne({
+            where: { id: data.id },
+            include: [{ model: Profile, as: 'profile' }],
+        });
+        // generate token
+        const { expiresIn, token } = await this.createToken(user);
+        return { user, token, expiresIn };
     }
     async login(loginUserDto) {
-        const userRepository = dataSource_1.UdremsData.getRepository(User_entity_1.User);
-        const user = await userRepository.findOne({
+        const user = await this.users.findOne({
             where: { email: loginUserDto.email },
         });
         if (!user)
-            throw new HttpException_1.HttpException(401, 'Invalid email or password');
+            throw new HttpException(401, 'Invalid email or password');
         const passwordMatch = await user.comparePassword(loginUserDto.password);
         if (!passwordMatch)
-            throw new HttpException_1.HttpException(401, 'Invalid email or password');
+            throw new HttpException(401, 'Invalid email or password');
         const { expiresIn, token } = await this.createToken(user);
         return {
             user,
@@ -42,7 +53,8 @@ class AuthService {
         };
     }
     async createToken(user) {
-        const expiresIn = 60 * 60;
+        const HOUR_IN_SECONDS = 3600;
+        const expiresIn = HOUR_IN_SECONDS;
         return {
             expiresIn,
             token: await user.generateToken(),
@@ -52,4 +64,4 @@ class AuthService {
         return `Authorization=${tokenData.token}; HttpOnly; Max-Age=${tokenData.expiresIn};`;
     }
 }
-exports.default = AuthService;
+export default AuthService;

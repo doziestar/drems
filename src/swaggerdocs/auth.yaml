@@ -1,0 +1,118 @@
+tags:
+ - name : Auth
+   description: Authentication
+
+paths:
+  /api/v1/auth/signup/:
+    post:
+      tags:
+      - Auth
+      summary: Signup
+      parameters:
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/createUserDto'
+      responses:
+        201:
+          description: 'Created and Returned User Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/users'
+
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+  /api/v1/auth/login/:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      parameters:
+      - name: body
+        in: body
+        description: user Data
+        required: true
+        schema:
+          $ref: '#/definitions/loginUserDto'
+      responses:
+        200:
+          description: 'OK and Returned User Object'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  expiresIn:
+                    type: integer
+                  data:
+                    $ref: '#/definitions/users'
+                  message: 'Login Successful'
+
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+  /api/v1/auth/logout/:
+    post:
+      tags:
+      - Auth
+      summary: Logout
+      responses:
+        200:
+          description: 'OK'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+definitions:
+  createUserDto:
+    type: object
+    required:
+      - username
+      - password
+      - confirmPassword
+      - email
+      - phoneNumber
+    properties:
+      username:
+        type: string
+      email:
+        type: string
+      phoneNumber:
+        type: string
+      password:
+        type: string
+      confirmPassword:
+        type: string
+
+  loginUserDto:
+    type: object
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+
+
+
+schemes:
+  - http
+  - https

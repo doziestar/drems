@@ -1,10 +1,8 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const envalid_1 = require("envalid");
+import { cleanEnv, port, str } from 'envalid';
 const validateEnv = () => {
-    (0, envalid_1.cleanEnv)(process.env, {
-        NODE_ENV: (0, envalid_1.str)(),
-        PORT: (0, envalid_1.port)(),
+    cleanEnv(process.env, {
+        NODE_ENV: str(),
+        PORT: port(),
     });
 };
-exports.default = validateEnv;
+export default validateEnv;

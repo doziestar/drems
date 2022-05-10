@@ -70,11 +70,35 @@ class App {
           description: 'Creating Briza Insurance API For Developers',
         },
       },
-      apis: ['swagger.yaml'],
+      apis: ['src/swaggerdocs/*.yaml'],
     };
 
     const specs = swaggerJSDoc(options);
-    this.app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+    this.app.use(
+      '/api-docs',
+      swaggerUi.serve,
+      swaggerUi.setup(specs, {
+        explorer: true,
+        swaggerOptions: {
+          nativeUI: true,
+          validatorUrl: null,
+          components: {
+            securitySchemes: {
+              bearerAuth: {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',
+              },
+            },
+          },
+          security: [
+            {
+              bearerAuth: [],
+            },
+          ],
+        },
+      }),
+    );
   }
 
   private async initializeDatabase() {
