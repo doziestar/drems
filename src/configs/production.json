@@ -23,7 +23,7 @@
     "user": "aotthwcnknddec",
     "name": "d7taaf36dgdp7a",
     "ssl": true,
-    "url": "postgres://aotthwcnknddec:166d28835baf26d502d6cd249d893474c5e837f80ab12bc47c3d230877927c73@ec2-54-172-175-251.compute-1.amazonaws.com:5432/d7taaf36dgdp7a"
+    "url": "postgres://aotthwcnknddec:166d28835baf26d502d6cd249d893474c5e837f80ab12bc47c3d230877927c73@ec2-54-172-175-251.compute-1.amazonaws.com:5432/d7taaf36dgdp7a?sslmode=no-verify"
   }
 
 }
