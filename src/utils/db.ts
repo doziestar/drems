@@ -7,12 +7,18 @@ console.log(`ENV: ${env}`);
 let sequelize: Sequelize;
 
 if (env === 'production') {
-  sequelize = new Sequelize(config.get('database.name'), config.get('database.user'), config.get('database.password'), {
+  // sequelize = new Sequelize(config.get('database.name'), config.get('database.user'), config.get('database.password'), {
+  //   dialect: 'postgres',
+  //   host: config.get('database.host'),
+  //   dialectOptions: {
+  //     ssl: true,
+  //   },
+  // });
+  sequelize = new Sequelize(config.get('database.url'), {
     dialect: 'postgres',
-    host: config.get('database.host'),
-    dialectOptions: {
-      ssl: true,
-    },
+    // dialectOptions: {
+    //   ssl: true,
+    // },
   });
 } else {
   sequelize = new Sequelize(config.get('db'), { dialect: 'postgres' });
