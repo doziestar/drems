@@ -70,12 +70,12 @@ class App {
           description: 'Creating Briza Insurance API For Developers',
         },
       },
-      apis: ['src/swaggerdocs/*.yaml'],
+      apis: ['src/swaggerdocs/*.yaml', 'src/routes/*.ts'],
     };
 
     const specs = swaggerJSDoc(options);
     this.app.use(
-      '/api-docs',
+      '/api',
       swaggerUi.serve,
       swaggerUi.setup(specs, {
         explorer: true,
