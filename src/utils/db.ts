@@ -7,7 +7,7 @@ console.log(`ENV: ${env}`);
 let sequelize: Sequelize;
 
 if (env === 'production') {
-  sequelize = new Sequelize(config.get('database.name'), config.get('database.username'), config.get('database.password'), {
+  sequelize = new Sequelize(config.get('database.name'), config.get('database.user'), config.get('database.password'), {
     dialect: 'postgres',
     host: config.get('database.host'),
     dialectOptions: {

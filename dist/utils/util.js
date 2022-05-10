@@ -1,10 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isEmpty = void 0;
 /**
  * @method isEmpty
  * @param {String | Number | Object} value
  * @returns {Boolean} true & false
  * @description this value is Empty Check
  */
-export const isEmpty = (value) => {
+const isEmpty = (value) => {
     if (value === null) {
         return true;
     }
@@ -21,3 +24,4 @@ export const isEmpty = (value) => {
         return false;
     }
 };
+exports.isEmpty = isEmpty;

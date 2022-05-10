@@ -1,35 +1,40 @@
-import sequelize from '../utils/db';
-import { DataTypes, Model } from 'sequelize';
-export class Profile extends Model {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Profile = void 0;
+const tslib_1 = require("tslib");
+const db_1 = (0, tslib_1.__importDefault)(require("../utils/db"));
+const sequelize_1 = require("sequelize");
+class Profile extends sequelize_1.Model {
 }
+exports.Profile = Profile;
 Profile.init({
     userId: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
     },
     bio: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     website: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     location: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     birthday: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
     avatar: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: true,
     },
 }, {
-    sequelize: sequelize,
+    sequelize: db_1.default,
     modelName: 'profile',
     tableName: 'profiles',
     timestamps: false,

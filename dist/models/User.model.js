@@ -1,20 +1,24 @@
-import sequelize from '../utils/db';
-import { Profile } from './Profile.model';
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import { DataTypes, Model } from 'sequelize';
-export class User extends Model {
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.User = void 0;
+const tslib_1 = require("tslib");
+const db_1 = (0, tslib_1.__importDefault)(require("../utils/db"));
+const Profile_model_1 = require("./Profile.model");
+const bcrypt_1 = (0, tslib_1.__importDefault)(require("bcrypt"));
+const jsonwebtoken_1 = (0, tslib_1.__importDefault)(require("jsonwebtoken"));
+const sequelize_1 = require("sequelize");
+class User extends sequelize_1.Model {
     async hashPassword() {
-        const salt = await bcrypt.genSalt(10);
+        const salt = await bcrypt_1.default.genSalt(10);
         try {
-            this.password = await bcrypt.hash(this.password, salt);
+            this.password = await bcrypt_1.default.hash(this.password, salt);
         }
         catch (error) {
             throw new Error(error);
         }
     }
     comparePassword(password) {
-        return bcrypt.compare(password, this.password);
+        return bcrypt_1.default.compare(password, this.password);
     }
     async generateToken() {
         try {
@@ -24,7 +28,7 @@ export class User extends Model {
                 phoneNumber: this.phoneNumber,
                 isActive: this.isActive,
             };
-            const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const token = await jsonwebtoken_1.default.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
             return token;
         }
         catch (error) {
@@ -33,7 +37,7 @@ export class User extends Model {
     }
     async createProfile() {
         try {
-            await Profile.create({
+            await Profile_model_1.Profile.create({
                 userId: this.id,
             });
         }
@@ -42,60 +46,61 @@ export class User extends Model {
         }
     }
 }
+exports.User = User;
 User.init({
     id: {
-        type: DataTypes.UUID,
+        type: sequelize_1.DataTypes.UUID,
         primaryKey: true,
-        defaultValue: DataTypes.UUIDV4,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
     },
     email: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     username: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     phoneNumber: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         unique: true,
     },
     isActive: {
-        type: DataTypes.BOOLEAN,
+        type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: true,
     },
     firstName: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         // allowNull: false,
     },
     lastName: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         // allowNull: false,
     },
     password: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
     },
     isVerified: {
-        type: DataTypes.BOOLEAN,
+        type: sequelize_1.DataTypes.BOOLEAN,
         defaultValue: false,
     },
     role: {
-        type: DataTypes.STRING,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false,
         defaultValue: 'user',
     },
     fullName: {
-        type: DataTypes.VIRTUAL,
+        type: sequelize_1.DataTypes.VIRTUAL,
         get() {
             return `${this.firstName} ${this.lastName}`;
         },
     },
 }, {
-    sequelize: sequelize,
+    sequelize: db_1.default,
     modelName: 'user',
     tableName: 'users',
     timestamps: true,
@@ -106,11 +111,11 @@ User.init({
         afterCreate: (user) => user.createProfile(),
     },
 });
-User.hasOne(Profile, {
+User.hasOne(Profile_model_1.Profile, {
     foreignKey: 'userId',
     as: 'profile',
 });
-Profile.belongsTo(User, {
+Profile_model_1.Profile.belongsTo(User, {
     foreignKey: 'userId',
     as: 'user',
 });

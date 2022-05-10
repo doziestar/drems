@@ -1,8 +1,11 @@
-import _ from 'lodash';
-import AuthService from '../services/auth.service';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const lodash_1 = (0, tslib_1.__importDefault)(require("lodash"));
+const auth_service_1 = (0, tslib_1.__importDefault)(require("../services/auth.service"));
 class AuthController {
     constructor() {
-        this.authService = new AuthService();
+        this.authService = new auth_service_1.default();
         this.signUp = async (req, res, next) => {
             try {
                 const userData = req.body;
@@ -11,7 +14,7 @@ class AuthController {
                     throw new Error('Password does not match');
                 }
                 const { user, token, expiresIn } = await this.authService.signup(userData);
-                const response = _.pick(user, [
+                const response = lodash_1.default.pick(user, [
                     'id',
                     'username',
                     'email',
@@ -37,7 +40,7 @@ class AuthController {
             try {
                 const userData = req.body;
                 const { token, user, expiresIn } = await this.authService.login(userData);
-                const response = _.pick(user, [
+                const response = lodash_1.default.pick(user, [
                     'id',
                     'username',
                     'email',
@@ -72,4 +75,4 @@ class AuthController {
         // };
     }
 }
-export default AuthController;
+exports.default = AuthController;

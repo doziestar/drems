@@ -1,13 +1,15 @@
-import { plainToClass } from 'class-transformer';
-import { validate } from 'class-validator';
-import { HttpException } from '../exceptions/HttpException';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const class_transformer_1 = require("class-transformer");
+const class_validator_1 = require("class-validator");
+const HttpException_1 = require("../exceptions/HttpException");
 const validationMiddleware = (type, value = 'body', skipMissingProperties = false, whitelist = true, forbidNonWhitelisted = true) => {
     console.log(type, value, skipMissingProperties, whitelist, forbidNonWhitelisted);
     return (req, res, next) => {
-        validate(plainToClass(type, req[value]), { skipMissingProperties, whitelist, forbidNonWhitelisted }).then((errors) => {
+        (0, class_validator_1.validate)((0, class_transformer_1.plainToClass)(type, req[value]), { skipMissingProperties, whitelist, forbidNonWhitelisted }).then((errors) => {
             if (errors.length > 0) {
                 const message = errors.map((error) => Object.values(error.constraints)).join(', ');
-                next(new HttpException(400, message));
+                next(new HttpException_1.HttpException(400, message));
             }
             else {
                 next();
@@ -15,4 +17,4 @@ const validationMiddleware = (type, value = 'body', skipMissingProperties = fals
         });
     };
 };
-export default validationMiddleware;
+exports.default = validationMiddleware;

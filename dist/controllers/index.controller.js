@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 class IndexController {
     constructor() {
         this.index = (req, res, next) => {
@@ -20,4 +22,4 @@ class IndexController {
         };
     }
 }
-export default IndexController;
+exports.default = IndexController;

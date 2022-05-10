@@ -1,14 +1,17 @@
-import { Router } from 'express';
-import IndexController from '../controllers/index.controller';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const index_controller_1 = (0, tslib_1.__importDefault)(require("../controllers/index.controller"));
+const express_1 = require("express");
 class IndexRoute {
     constructor() {
         this.path = '/';
-        this.router = Router();
-        this.indexController = new IndexController();
+        this.router = (0, express_1.Router)();
+        this.indexController = new index_controller_1.default();
         this.initializeRoutes();
     }
     initializeRoutes() {
         this.router.get(`${this.path}`, this.indexController.index);
     }
 }
-export default IndexRoute;
+exports.default = IndexRoute;
