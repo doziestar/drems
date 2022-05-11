@@ -32,7 +32,7 @@ class AuthController {
         'role',
       ]);
 
-      res.status(201).json({ data: response, token: token, expiresIn: expiresIn, message: 'signup successful' });
+      res.status(201).json({ data: response, token: token, expiresIn: expiresIn, message: 'signup successful' }).setHeader('X-Auth', token);
     } catch (error) {
       next(error);
     }
