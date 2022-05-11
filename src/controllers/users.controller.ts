@@ -1,38 +1,44 @@
-// // import userService from '@services/users.service';
-// import { NextFunction, Request, Response } from 'express';
+import { isEmpty } from '@/utils/util';
+import userService from '@services/users.service';
+import { NextFunction, Request, Response } from 'express';
 
-// class UsersController {
-//   public userService = new userService();
+class UsersController {
+  public userService = new userService();
 
-//   public checkPhone = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const exist = await this.userService.checkUserPhoneExist(req.body);
+  public async getUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      console.log('getUsers');
+      const users = await this.userService.getUsers();
+      console.log('users', users);
+      res.status(200).json({
+        success: true,
+        data: users,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 
-//       res.status(200).json({ data: exist, message: 'check phone exist' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+  public async getUser(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      if (isEmpty(req.params.id)) {
+        throw new Error('User id is required');
+      }
 
-//   public checkEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const exist = await this.userService.checkUserExist(req.body);
+      const user = await this.userService.getUser(req.params.id);
 
-//       res.status(200).json({ data: exist, message: 'Check Email Exist' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
+      if (!user) {
+        throw new Error('User not found');
+      }
 
-//   public checkUserName = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-//     try {
-//       const exist = await this.userService.checkUserNameExist(req.body);
+      res.status(200).json({
+        success: true,
+        data: user,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+}
 
-//       res.status(201).json({ data: exist, message: 'Check UserName Exist' });
-//     } catch (error) {
-//       next(error);
-//     }
-//   };
-// }
-
-// export default UsersController;
+export default UsersController;

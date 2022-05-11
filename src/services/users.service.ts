@@ -1,25 +1,44 @@
-// import { UdremsData } from '@/dataSource';
-// import { User } from '@/entity/User.entity';
-// import { isEmpty } from '@utils/util';
-// import { Repository } from 'typeorm';
+import { IUser } from '@/interfaces/users.interface';
+import { User } from '@/models/User.model';
+// import crypto from 'crypto';
 
-// class UserService {
-//   public users: Repository<User> = UdremsData.getRepository(User);
+class UserService {
+  public users = User;
 
-//   public async checkUserExist(email: string): Promise<boolean> {
-//     const user = await this.users.findOne({ where: { email } });
-//     return isEmpty(user);
-//   }
+  public async getUsers(): Promise<IUser[]> {
+    console.log('getUsers service');
+    const users = await this.users.findAll();
+    console.log('users service', users);
+    if (!users) {
+      throw new Error('Users not found');
+    }
+    return users;
+  }
 
-//   public async checkUserNameExist(userName: string): Promise<boolean> {
-//     const user = await this.users.findOne({ where: { userName } });
-//     return isEmpty(user);
-//   }
+  public async getUser(id: string): Promise<IUser> {
+    const user = this.users.findOne({
+      where: {
+        id,
+      },
+    });
+    if (!user) {
+      throw new Error('User not found');
+    }
+    return user;
+  }
 
-//   public async checkUserPhoneExist(phoneNumber: string): Promise<boolean> {
-//     const user = await this.users.findOne({ where: { phoneNumber } });
-//     return isEmpty(user);
-//   }
-// }
+  // public async createUser(user: IUser): Promise<{ newUser: IUser; password: string }> {
+  //   // generate password
+  //   const password = crypto.randomBytes(20).toString('hex');
+  //   const newUser: IUser = this.users.create({
+  //     username: user.username,
+  //     email: user.email,
+  //     phone: user.phoneNumber,
+  //     password: password,
+  //   });
 
-// export default UserService;
+  //   return { newUser, password };
+  // }
+}
+
+export default UserService;

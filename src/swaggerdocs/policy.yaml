@@ -1,0 +1,381 @@
+tags:
+ - name : Insurance Policy
+   description: Insurance Policy
+
+paths:
+  /api/v1/policy/:
+    post:
+      tags:
+      - Insurance Policy
+      summary: Create Insurance Policy
+      parameters:
+      - name: body
+        in: body
+        description: Insurance Policy Data
+        required: true
+        schema:
+          $ref: '#/definitions/createPolicyDto'
+      responses:
+        201:
+          description: 'Created and Returned Insurance Policy Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/insurancePolicy'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+    get:
+      tags:
+      - Insurance Policy
+      summary: Get All Insurance Policy
+      description: Get All Insurance Policy
+      responses:
+        200:
+          description: 'OK and Returned Array of Insurance Policy Object'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/insurancePolicy'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+  /api/v1/policy/:id:
+    get:
+      tags:
+      - Insurance Policy
+      summary: Get Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned Insurance Policy Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/insurancePolicy'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    put:
+      tags:
+      - Insurance Policy
+      summary: Update Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: body
+        in: body
+        description: Insurance Policy Data
+        required: true
+        schema:
+          $ref: '#/definitions/createPolicyDto'
+      responses:
+        200:
+          description: 'OK and Returned Insurance Policy Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/insurancePolicy'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    delete:
+      tags:
+      - Insurance Policy
+      summary: Delete Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned Insurance Policy Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/insurancePolicy'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+/api/v1/policy/:id/users/:
+    get:
+      tags:
+      - Insurance Policy
+      summary: Get All Users of Insurance Policy
+      description: Get All Users of Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned Array of Users Object'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/users'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    post:
+      tags:
+      - Insurance Policy
+      summary: Add User to Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: body
+        in: body
+        description: User Data
+        required: true
+        schema:
+          $ref: '#/definitions/addUserDto'
+      responses:
+        200:
+          description: 'OK and Returned User Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/users'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    delete:
+      tags:
+      - Insurance Policy
+      summary: Delete User from Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        description: User Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned User Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/users'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+/api/v1/policy/:id/users/:userId/roles/:
+    get:
+      tags:
+      - Insurance Policy
+      summary: Get All Roles of User in Insurance Policy
+      description: Get All Roles of User in Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        description: User Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned Array of Roles Object'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/definitions/roles'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+    post:
+      tags:
+      - Insurance Policy
+      summary: Add Role to User in Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        description: User Id
+        required: true
+        schema:
+          type: integer
+      - name: body
+        in: body
+        description: Role Data
+        required: true
+        schema:
+          $ref: '#/definitions/addRoleDto'
+      responses:
+        200:
+          description: 'OK and Returned Role Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/roles'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+
+    delete:
+      tags:
+      - Insurance Policy
+      summary: Delete Role from User in Insurance Policy
+      parameters:
+      - name: id
+        in: path
+        description: Insurance Policy Id
+        required: true
+        schema:
+          type: integer
+      - name: userId
+        in: path
+        description: User Id
+        required: true
+        schema:
+          type: integer
+      - name: roleId
+        in: path
+        description: Role Id
+        required: true
+        schema:
+          type: integer
+      responses:
+        200:
+          description: 'OK and Returned Role Object'
+          content:
+            application/json:
+              schema:
+                $ref: '#/definitions/roles'
+        400:
+          description: 'Bad Request'
+        409:
+          description: 'Conflict'
+        500:
+          description: 'Server Error'
+
+definitions:
+  insurancePolicy:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      amountToEnsure:
+        type: integer
+      email:
+        type: string
+      inceptionDate:
+        type: string
+      installmentPayment:
+        type: integer
+      insuranceType:
+        type: string
+      clientId:
+        type: integer
+      createdAt:
+        type: string
+      updatedAt:
+        type: string
+      deletedAt:
+        type: string
+  createPolicyDto:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+  addUserDto:
+    type: object
+    properties:
+      userId:
+        type: integer
+  addRoleDto:
+    type: object
+    properties:
+      roleId:
+        type: integer
+
