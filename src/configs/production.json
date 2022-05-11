@@ -1,6 +1,7 @@
 {
   "env": "production",
   "secretKey": "secretKey",
+  "secretOrPrivateKey": "secretOrPrivateKey",
   "log": {
     "format": "combined",
     "dir": "../logs"
