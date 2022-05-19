@@ -1,15 +1,15 @@
+import { IUser } from '@/interfaces/users.interface';
 import { isEmpty } from '@/utils/util';
-import userService from '@services/users.service';
+import { UserService } from '@services/users.service';
 import { NextFunction, Request, Response } from 'express';
 
 class UsersController {
-  public userService = new userService();
+  private userService: UserService;
 
   public async getUsers(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
       console.log('getUsers');
-      const users = await this.userService.getUsers();
-      console.log('users', users);
+      const users: IUser[] = await this.userService.getUsers();
       res.status(200).json({
         success: true,
         data: users,
@@ -21,11 +21,9 @@ class UsersController {
 
   public async getUser(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      if (isEmpty(req.params.id)) {
-        throw new Error('User id is required');
-      }
+      if (isEmpty(req.params.id)) throw new Error('User id is required');
 
-      const user = await this.userService.getUser(req.params.id);
+      const user: IUser = await this.userService.getUser(req.params.id);
 
       if (!user) {
         throw new Error('User not found');

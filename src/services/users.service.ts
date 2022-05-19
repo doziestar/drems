@@ -1,18 +1,23 @@
 import { IUser } from '@/interfaces/users.interface';
+import { IUserService } from '@/interfaces/userService.interface';
 import { User } from '@/models/User.model';
 // import crypto from 'crypto';
 
-class UserService {
-  public users = User;
+export class UserService implements IUserService {
+  private users = User;
 
   public async getUsers(): Promise<IUser[]> {
+    console.log('calling service getUsers');
     console.log('getUsers service');
-    const users = await this.users.findAll();
-    console.log('users service', users);
-    if (!users) {
-      throw new Error('Users not found');
+    try {
+      const users: IUser[] = await this.users.findAll();
+      if (users.length === 0) {
+        throw new Error('You have no users');
+      }
+      return users;
+    } catch (error) {
+      throw error;
     }
-    return users;
   }
 
   public async getUser(id: string): Promise<IUser> {
@@ -41,4 +46,4 @@ class UserService {
   // }
 }
 
-export default UserService;
+// export default UserService;

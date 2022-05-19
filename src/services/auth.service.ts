@@ -12,10 +12,12 @@ import { User } from '../models/User.model';
 
 class AuthService implements IAuth {
   private users = User;
+
   public async signup(createUserDto: CreateUserDto): Promise<{ user: IUser; token: string; expiresIn: Number }> {
     const userExist: IUser = await this.users.findOne({
       where: { email: createUserDto.email },
     });
+
     if (userExist) throw new HttpException(409, 'user already exist');
 
     const userExist2: IUser = await this.users.findOne({ where: { username: createUserDto.username } });

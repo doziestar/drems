@@ -104,6 +104,11 @@ User.init(
       get() {
         return `${this.firstName} ${this.lastName}`;
       },
+      set(value: string) {
+        const names = value.split(' ');
+        this.firstName = names[0];
+        this.lastName = names[1];
+      },
     },
   },
   {
@@ -120,6 +125,7 @@ User.init(
   },
 );
 
+/* one to one between user and profile */
 User.hasOne(Profile, {
   foreignKey: 'userId',
   as: 'profile',
