@@ -6,6 +6,7 @@ import { User } from './User.model';
 export class Policy extends Model implements IPolicy {
   public id: string;
   public amountToEnsure: number;
+  public name: string;
   public email: string;
   public inceptionDate: Date;
   public installmentPayment: string;

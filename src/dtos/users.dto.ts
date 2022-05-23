@@ -30,3 +30,11 @@ export class LoginUserDto {
   @IsString()
   public password: string;
 }
+
+export class GetUserDto {
+  @IsString()
+  public id: string;
+
+  @IsString()
+  public email: string;
+}

@@ -1,22 +1,22 @@
 version: '3.7'
 
 services:
-  proxy:
-    image: nginx:alpine
-    container_name: proxy
-    ports:
-      - '80:80'
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-    restart: 'unless-stopped'
-    networks:
-      - backend
+  # proxy:
+  #   image: nginx:alpine
+  #   container_name: proxy
+  #   ports:
+  #     - '80:80'
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   restart: 'unless-stopped'
+  #   networks:
+  #     - backend
   server:
     build:
       context: ./
       target: development-build-stage
       dockerfile: Dockerfile
-    container_name: server
+    container_name: briza_server
     ports:
       - '3000:3000'
     volumes:

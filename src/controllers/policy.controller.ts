@@ -1,6 +1,7 @@
+// import { Delete, Get, Post, Put, Route } from 'tsoa';
+import { Policy } from '@/models/Policy.model';
 import { PolicyService } from '@/services/policy.service';
 import { NextFunction, Request, Response } from 'express';
-// import { Delete, Get, Post, Put, Route } from 'tsoa';
 
 // @Route('/api/v1/policies')
 export class PolicyController {
@@ -31,7 +32,7 @@ export class PolicyController {
   // @Post()
   public create = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const policy = await this.policyService.create(req.body);
+      const policy = await Policy.create(req.body);
 
       res.status(201).json({ data: policy, message: 'Policy' });
     } catch (error) {

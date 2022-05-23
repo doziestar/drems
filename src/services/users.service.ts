@@ -4,13 +4,11 @@ import { User } from '@/models/User.model';
 // import crypto from 'crypto';
 
 export class UserService implements IUserService {
-  private users = User;
-
   public async getUsers(): Promise<IUser[]> {
     console.log('calling service getUsers');
     console.log('getUsers service');
     try {
-      const users: IUser[] = await this.users.findAll();
+      const users: IUser[] = await User.findAll();
       if (users.length === 0) {
         throw new Error('You have no users');
       }
@@ -21,7 +19,7 @@ export class UserService implements IUserService {
   }
 
   public async getUser(id: string): Promise<IUser> {
-    const user = this.users.findOne({
+    const user = User.findOne({
       where: {
         id,
       },

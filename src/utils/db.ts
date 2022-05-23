@@ -22,6 +22,7 @@ if (env === 'production') {
     },
   });
 } else {
+  console.log(config.get('db'));
   sequelize = new Sequelize(config.get('db'), { dialect: 'postgres' });
 }
 
