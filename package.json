@@ -39,7 +39,7 @@
     "hpp": "^0.2.3",
     "jest": "^28.1.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.2",
+    "mongoose": "^6.4.6",
     "morgan": "^1.10.0",
     "passport-local": "^1.0.0",
     "pg": "^8.7.1",
